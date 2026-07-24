@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import BreadcrumbLd from '../components/BreadcrumbLd.astro';
+import { site } from '../data/site';
+
+const title = `Book a demo — ${site.name}`;
+const description =
+  'Book a demo of Harbour Fitness. Tell us about your gym and we’ll show you a branded build and walk through the management tools.';
+
+const sent = Astro.url.searchParams.get('sent') === '1';
+const successUrl = new URL('/contact?sent=1', Astro.site).href;
+---
+
+<Base title={title} description={description} noindex={sent}>
+  <section class="mx-auto max-w-2xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+    <p class="text-sm font-medium uppercase tracking-wider text-teal-700">Book a demo</p>
+    <h1 class="display mt-3 text-4xl md:text-5xl text-brand-950">
+      Let’s get your gym its app.
+    </h1>
+
+    <p class="mt-6 max-w-2xl text-ink-600 leading-relaxed">
+      Tell us a little about your club and we’ll walk you through the management portal, show you a
+      branded build, and help your first cohort log their first workouts. Prefer email? Reach us at
+      <a href={`mailto:${site.email}`} class="font-medium text-brand-700 hover:underline">{site.email}</a>.
+    </p>
+
+    {sent ? (
+      <div class="mt-10 rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
+        <p class="text-lg font-semibold text-emerald-900">Thanks — your message is on its way.</p>
+        <p class="mt-2 text-sm text-emerald-800">We’ll be in touch within a day or two.</p>
+        <a href="/" class="mt-4 inline-block text-sm font-medium text-brand-700 hover:underline">
+          &larr; Back to home
+        </a>
+      </div>
+    ) : (
+      <form action="https://api.web3forms.com/submit" method="POST" class="mt-10 space-y-5">
+        <input type="hidden" name="access_key" value="fe323b08-3203-44e1-a480-6855d356fc2f" />
+        <input type="hidden" name="subject" value="Harbour Fitness — demo request" />
+        <input type="hidden" name="from_name" value="Harbour Fitness website" />
+        <input type="hidden" name="redirect" value={successUrl} />
+        <!-- Honeypot field — bots fill this in, humans don't see it -->
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" class="hidden" style="display:none" />
+
+        <div>
+          <label for="name" class="block text-sm font-medium text-ink-800">Your name</label>
+          <input id="name" name="name" type="text" required autocomplete="name"
+            class="mt-1.5 w-full rounded-lg border border-ink-300 bg-white px-3 py-2.5 text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="company" class="block text-sm font-medium text-ink-800">Company / gym name</label>
+          <input id="company" name="company" type="text" autocomplete="organization"
+            class="mt-1.5 w-full rounded-lg border border-ink-300 bg-white px-3 py-2.5 text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-ink-800">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email"
+            class="mt-1.5 w-full rounded-lg border border-ink-300 bg-white px-3 py-2.5 text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium text-ink-800">
+            Tell us about your gym
+          </label>
+          <textarea id="message" name="message" rows="5" required
+            placeholder="How many members? What do you run — classes, PT, small groups? What are you using today?"
+            class="mt-1.5 w-full resize-y rounded-lg border border-ink-300 bg-white px-3 py-2.5 text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit"
+          class="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-3 font-medium text-white shadow-sm hover:bg-brand-800 transition-colors">
+          Book a demo
+        </button>
+      </form>
+    )}
+
+    <p class="mt-10 text-sm text-ink-500">
+      {site.company} &middot; trading as {site.studio} &middot; United Kingdom
+    </p>
+  </section>
+
+  <BreadcrumbLd name="Book a demo" path="/contact/" />
+</Base>

@@ -1,0 +1,96 @@
+---
+// A device mockup frame that holds a screenshot. Until a real screenshot is
+// dropped into public/screenshots, it degrades gracefully to an on-brand,
+// captioned placeholder (never a broken image): if `src` is missing OR fails to
+// load, the caption placeholder shows through.
+// Two variants: a phone for the member app, a browser window for the portal.
+// Pass `iconSrc`/`tint` to brand the placeholder for a specific club.
+type Props = {
+  variant?: 'phone' | 'browser';
+  src?: string;
+  alt?: string;
+  label?: string;
+  caption?: string;
+  /** Placeholder logo shown until a real screenshot loads. */
+  iconSrc?: string;
+  /** Hex accent for the placeholder gradient + caption (defaults to Harbour brand). */
+  tint?: string;
+  /** object-position for the screenshot (e.g. "object-left-top" to reveal the
+   *  left edge of a wide image). Defaults to top-centre. */
+  objectPos?: string;
+  class?: string;
+};
+const {
+  variant = 'phone',
+  src,
+  alt = '',
+  label,
+  caption,
+  iconSrc = '/logos/harbourFitnessIcon.svg',
+  tint,
+  objectPos = 'object-top',
+  class: className = '',
+} = Astro.props;
+
+// When a club tint is supplied, use inline styles; otherwise fall back to the
+// Harbour brand Tailwind classes.
+const phStyle = tint ? `background:linear-gradient(135deg, ${tint}2e, #ffffff)` : undefined;
+const phClass = tint ? '' : 'bg-gradient-to-br from-brand-100 to-white';
+const capStyle = tint ? `color:${tint}` : undefined;
+const capClass = tint ? '' : 'text-brand-500';
+---
+
+{variant === 'phone' ? (
+  <div class={`relative mx-auto w-full min-w-0 max-w-[260px] ${className}`}>
+    <div class="rounded-[2.5rem] bg-ink-900 p-2.5 shadow-2xl ring-1 ring-ink-900/10">
+      <div class="relative overflow-hidden rounded-[2rem] bg-ink-100 aspect-[9/19.5]">
+        {/* notch */}
+        <div class="absolute left-1/2 top-0 z-20 h-5 w-24 -translate-x-1/2 rounded-b-2xl bg-ink-900"></div>
+        <div class={`absolute inset-0 flex flex-col items-center justify-center gap-2 text-center ${phClass}`} style={phStyle}>
+          <img src={iconSrc} alt="" class="h-10 w-10 rounded-lg object-contain opacity-90" />
+          {caption && <p class={`px-4 text-xs font-medium uppercase tracking-wider ${capClass}`} style={capStyle}>{caption}</p>}
+        </div>
+        {src && (
+          <img
+            src={src}
+            alt={alt}
+            class={`absolute inset-0 z-10 block h-full w-full object-cover ${objectPos}`}
+            loading="lazy"
+            onerror="this.style.display='none'"
+          />
+        )}
+      </div>
+    </div>
+  </div>
+) : (
+  <div class={`relative mx-auto w-full min-w-0 ${className}`}>
+    <div class="overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-2xl ring-1 ring-ink-900/5">
+      {/* window chrome */}
+      <div class="flex items-center gap-2 border-b border-ink-200 bg-ink-50 px-4 py-3">
+        <span class="h-3 w-3 rounded-full bg-ink-300"></span>
+        <span class="h-3 w-3 rounded-full bg-ink-300"></span>
+        <span class="h-3 w-3 rounded-full bg-ink-300"></span>
+        {label && (
+          <span class="ml-3 truncate rounded-md bg-white px-3 py-1 text-xs text-ink-400 ring-1 ring-ink-200">
+            {label}
+          </span>
+        )}
+      </div>
+      <div class="relative aspect-[16/10] bg-ink-100">
+        <div class={`absolute inset-0 flex flex-col items-center justify-center gap-2 text-center ${phClass}`} style={phStyle}>
+          <img src={iconSrc} alt="" class="h-12 w-12 rounded-lg object-contain opacity-90" />
+          {caption && <p class={`px-4 text-xs font-medium uppercase tracking-wider ${capClass}`} style={capStyle}>{caption}</p>}
+        </div>
+        {src && (
+          <img
+            src={src}
+            alt={alt}
+            class={`absolute inset-0 z-10 block h-full w-full object-cover ${objectPos}`}
+            loading="lazy"
+            onerror="this.style.display='none'"
+          />
+        )}
+      </div>
+    </div>
+  </div>
+)}

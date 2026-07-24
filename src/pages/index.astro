@@ -1,0 +1,218 @@
+---
+import Base from '../layouts/Base.astro';
+import Pillar from '../components/Pillar.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import DeviceFrame from '../components/DeviceFrame.astro';
+import CustomerSpotlight from '../components/CustomerSpotlight.astro';
+import Faq from '../components/Faq.astro';
+import { site, pillars, features } from '../data/site';
+
+const title = `${site.name} — white-labelled club apps for the modern gym`;
+const description =
+  'Give your gym its own branded app for members to log and track every session — built, published and run for you. Manage classes, workouts and members from one branded web portal.';
+
+const siteUrl = Astro.site?.href ?? 'https://harbourfitness.co.uk';
+const logoUrl = new URL('/logos/harbourFitnessIcon.svg', siteUrl).href;
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  legalName: site.company,
+  alternateName: ['iCentric Fitness', site.studio],
+  url: siteUrl,
+  logo: logoUrl,
+  email: site.email,
+  description:
+    'White-labelled club apps for gyms and studios: a branded member app for logging and tracking sessions, plus a management portal for classes, workouts and members.',
+  areaServed: { '@type': 'Country', name: 'United Kingdom' },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    email: site.email,
+    areaServed: 'GB',
+  },
+};
+
+const softwareLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: site.name,
+  description,
+  url: siteUrl,
+  image: logoUrl,
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'iOS, Android, Web',
+  publisher: {
+    '@type': 'Organization',
+    name: site.studio,
+    alternateName: site.company,
+    url: siteUrl,
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '50',
+    priceCurrency: 'GBP',
+    description: 'Club subscription from £50/month plus a one-off setup fee.',
+  },
+};
+---
+
+<Base title={title} description={description}>
+  <!-- ============ HERO ============ -->
+  <section class="relative overflow-hidden border-b border-ink-200">
+    <div class="absolute -top-32 -right-24 h-96 w-96 rounded-full bg-accent-200/40 blur-3xl -z-10"></div>
+    <div class="absolute -bottom-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-brand-200/50 blur-3xl -z-10"></div>
+
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24 grid items-center gap-12 lg:grid-cols-2">
+      <div class="min-w-0">
+        <p class="text-sm font-medium uppercase tracking-wider text-teal-700">
+          Harbour Fitness <span class="mx-1 text-ink-300">·</span> for gyms &amp; studios
+        </p>
+        <h1 class="display mt-4 text-4xl sm:text-5xl text-brand-950">
+          An app for your gym?, <span class="text-brand-600">no problem.</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg text-ink-600 leading-relaxed">
+          Your gym/studio can have a fully branded app — under its own name on the App Store and
+          Google Play — for members to log and track their sessions. You manage classes, workouts
+          and members from one branded web portal. We build it, publish it, and run it for you.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact/" class="rounded-xl bg-brand-700 px-5 py-3 font-medium text-white shadow-sm hover:bg-brand-800 transition-colors">
+            Book a demo
+          </a>
+          <a href="/how-it-works/" class="rounded-xl border border-ink-300 bg-white px-5 py-3 font-medium text-ink-800 hover:border-brand-400 hover:text-brand-700 transition-colors">
+            See how it works
+          </a>
+        </div>
+        <p class="mt-5 text-sm text-ink-500">{site.motto}</p>
+      </div>
+
+      <!-- Hero device composition — phone layered IN FRONT of the web view -->
+      <div class="relative min-w-0 pb-6">
+        <DeviceFrame
+          variant="browser"
+          src="/screenshots/web/dashboard.png"
+          alt="Harbour Fitness management portal dashboard"
+          label="app.yourgym.co.uk"
+          caption="Management portal · Dashboard"
+          class="relative z-10"
+        />
+        <div class="absolute -bottom-8 right-0 z-30 w-40 sm:w-44 md:w-48">
+          <DeviceFrame
+            variant="phone"
+            src="/screenshots/mobile/home.png"
+            alt="Your gym's branded member app"
+            caption="Member app"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THREE PILLARS ============ -->
+  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+    <p class="text-sm font-medium uppercase tracking-wider text-teal-700">One platform, three parts</p>
+    <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Everything your club needs to run training.</h2>
+    <p class="mt-4 max-w-2xl text-ink-600 leading-relaxed">
+      A member app they’ll actually open, a management portal you’ll actually use, and a store
+      presence that carries your name — not a generic third-party one.
+    </p>
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {pillars.map((p) => <Pillar {...p} />)}
+    </div>
+  </section>
+
+  <!-- ============ MEMBER APP ============ -->
+  <section class="border-t border-ink-200 bg-ink-50">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20 grid items-center gap-12 lg:grid-cols-2">
+      <div class="order-2 lg:order-1 flex justify-center gap-4">
+        <DeviceFrame variant="phone" src="/screenshots/mobile/log.png" alt="Logging a workout in the member app" caption="Log workout" class="max-w-[220px]" />
+        <DeviceFrame variant="phone" src="/screenshots/mobile/progress.png" alt="Member progress tracking" caption="Progress" class="mt-10 hidden sm:block max-w-[220px]" />
+      </div>
+      <div class="order-1 lg:order-2">
+        <p class="text-sm font-medium uppercase tracking-wider text-teal-700">For your members</p>
+        <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">A workout app they’ll actually open.</h2>
+        <p class="mt-4 text-ink-600 leading-relaxed">
+          Members capture sets, reps, weight, time and speed straight from their phone between sets —
+          no clipboards, no end-of-week catch-up. Their history and progress build session over
+          session, so they see the results that keep them coming back.
+        </p>
+        <ul class="mt-6 space-y-3">
+          {['Log every set the moment it happens', 'Personal workout history and progress charts', 'Downloaded from the store under your gym’s name'].map((t) => (
+            <li class="flex items-start gap-3 text-ink-700">
+              <span class="mt-1 inline-block size-2 shrink-0 rounded-full bg-teal-600"></span>
+              <span>{t}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MANAGEMENT PORTAL ============ -->
+  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20 grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="text-sm font-medium uppercase tracking-wider text-brand-600">For coaches &amp; managers</p>
+      <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Run it all from one branded portal.</h2>
+      <p class="mt-4 text-ink-600 leading-relaxed">
+        Build a reusable exercise library once, assemble it into classes, and schedule recurring
+        sessions without rebuilding them every week. See your whole roster, manage access, and
+        watch class-wide consistency and progress — so you know exactly where to step in.
+      </p>
+      <ul class="mt-6 space-y-3">
+        {['Exercise library and class catalogue, built once', 'Recurring session scheduling', 'Member roster, access and progress reports'].map((t) => (
+          <li class="flex items-start gap-3 text-ink-700">
+            <span class="mt-1 inline-block size-2 shrink-0 rounded-full bg-brand-600"></span>
+            <span>{t}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <DeviceFrame variant="browser" src="/screenshots/web/sessions.png" alt="Class and session management in the portal" label="app.yourgym.co.uk/sessions" caption="Classes & sessions" />
+  </section>
+
+  <!-- ============ FEATURE GRID ============ -->
+  <section class="border-t border-ink-200 bg-ink-50">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">What you get</p>
+      <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Everything your club actually needs.</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {features.map((f) => <FeatureCard feature={f} />)}
+      </div>
+      <div class="mt-8">
+        <a href="/features/" class="inline-flex text-sm font-medium text-brand-700 hover:underline">
+          Explore every feature &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CUSTOMER SPOTLIGHT ============ -->
+  <CustomerSpotlight />
+
+  <!-- ============ FAQ ============ -->
+  <Faq />
+
+  <!-- ============ CTA BAND ============ -->
+  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16">
+    <div class="relative overflow-hidden rounded-3xl bg-brand-900 p-8 text-white md:p-14">
+      <div class="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-accent-500/20 blur-3xl"></div>
+      <div class="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="relative max-w-2xl">
+        <p class="text-sm font-medium uppercase tracking-wider text-accent-300">Get started</p>
+        <h2 class="display mt-3 text-3xl md:text-4xl">Put your gym’s app in our hands.</h2>
+        <p class="mt-4 text-brand-100 leading-relaxed">
+          Tell us about your club and we’ll walk you through the management tools, show you a branded
+          build, and help your first cohort log their first workouts.
+        </p>
+        <a href="/contact/" class="mt-6 inline-block rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 hover:bg-accent-400 transition-colors">
+          Book a demo &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(softwareLd)} />
+</Base>

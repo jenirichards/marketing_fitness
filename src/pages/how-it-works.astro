@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import BreadcrumbLd from '../components/BreadcrumbLd.astro';
+import { site, steps } from '../data/site';
+
+const title = `How it works — ${site.name}`;
+const description =
+  'From your logo to a live app on the stores: how Harbour Fitness brands, builds, publishes and runs a fitness app for your gym — with members logging sessions and you managing it all from the web.';
+---
+
+<Base title={title} description={description}>
+  <!-- Header -->
+  <section class="border-b border-ink-200">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">How it works</p>
+      <h1 class="display mt-3 text-4xl md:text-5xl text-brand-950 max-w-3xl">
+        From your logo to a live app — we handle the hard part.
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-ink-600 leading-relaxed">
+        No design project. No dev team on your side. You bring the gym; we bring the app,
+        the stores and the platform behind it.
+      </p>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section class="mx-auto max-w-3xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+    <ol class="relative border-l border-ink-200">
+      {steps.map((s) => (
+        <li class="mb-12 ml-8 last:mb-0">
+          <span class="absolute -left-4 flex h-8 w-8 items-center justify-center rounded-full bg-brand-700 text-xs font-semibold text-white ring-4 ring-white">
+            {s.n}
+          </span>
+          <h3 class="text-xl font-semibold text-ink-900">{s.title}</h3>
+          <p class="mt-2 text-ink-600 leading-relaxed">{s.body}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Reassurance band -->
+  <section class="border-t border-ink-200 bg-ink-50">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 grid gap-6 sm:grid-cols-3">
+      <div class="rounded-2xl border border-ink-200 bg-white p-6">
+        <h3 class="font-semibold text-ink-900">One backend, many gyms</h3>
+        <p class="mt-2 text-sm text-ink-600 leading-relaxed">
+          Every club runs on the same shared platform, with your data scoped to your club —
+          ready to scale from a single studio to a multi-site operator.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-ink-200 bg-white p-6">
+        <h3 class="font-semibold text-ink-900">Your brand, front and centre</h3>
+        <p class="mt-2 text-sm text-ink-600 leading-relaxed">
+          Your logo, your colours, your name on the store listing and the home-screen icon.
+          Members download your app — not a generic one.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-ink-200 bg-white p-6">
+        <h3 class="font-semibold text-ink-900">We keep it running</h3>
+        <p class="mt-2 text-sm text-ink-600 leading-relaxed">
+          Store submissions, updates and the platform behind the scenes are ours to handle,
+          so you can stay focused on coaching.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16">
+    <div class="relative overflow-hidden rounded-3xl bg-brand-900 p-8 text-white md:p-14">
+      <div class="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-accent-500/20 blur-3xl"></div>
+      <div class="relative max-w-2xl">
+        <h2 class="display text-3xl md:text-4xl">Ready to see your gym’s app?</h2>
+        <p class="mt-4 text-brand-100 leading-relaxed">
+          Book a demo and we’ll show you a branded build and walk through how your members and
+          coaches would use it, day to day.
+        </p>
+        <a href="/contact/" class="mt-6 inline-block rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 hover:bg-accent-400 transition-colors">
+          Book a demo &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <BreadcrumbLd name="How it works" path="/how-it-works/" />
+</Base>

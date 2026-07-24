@@ -1,0 +1,46 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d3a6d" />
+      <stop offset="55%" stop-color="#142c54" />
+      <stop offset="100%" stop-color="#0f1f3d" />
+    </linearGradient>
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e6fa8" />
+      <stop offset="100%" stop-color="#0d2b3e" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1080" cy="90" r="260" fill="#f59e0b" opacity="0.10" />
+  <circle cx="120" cy="600" r="300" fill="#0d9488" opacity="0.12" />
+
+  <!-- Icon chip -->
+  <g transform="translate(96,96)">
+    <rect width="96" height="96" rx="22" fill="url(#chip)" />
+    <text x="0" y="66" font-family="'Courier New', monospace" font-size="58" fill="#2dd4bf" opacity="0.55">{</text>
+    <text x="74" y="66" font-family="'Courier New', monospace" font-size="58" fill="#2dd4bf" opacity="0.55">}</text>
+    <g transform="translate(48,48) scale(1.5) translate(-32,-32)">
+      <g fill="#ffffff">
+        <rect x="26" y="29" width="12" height="6" rx="3" />
+        <rect x="21" y="23" width="5.5" height="18" rx="2.2" />
+        <rect x="37.5" y="23" width="5.5" height="18" rx="2.2" />
+      </g>
+      <g fill="#5eead4">
+        <rect x="16.5" y="26.5" width="4" height="11" rx="2" />
+        <rect x="43.5" y="26.5" width="4" height="11" rx="2" />
+      </g>
+    </g>
+  </g>
+  <text x="216" y="162" font-family="'Geist', Arial, sans-serif" font-size="34" font-weight="700" fill="#c2d2e8">Harbour Fitness</text>
+
+  <!-- Headline -->
+  <text x="96" y="330" font-family="'Geist', Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-2" fill="#ffffff">Your gym’s own app,</text>
+  <text x="96" y="416" font-family="'Geist', Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-2" fill="#8fadd5">without building one.</text>
+
+  <!-- Sub -->
+  <text x="96" y="486" font-family="'Geist', Arial, sans-serif" font-size="30" font-weight="500" fill="#c2d2e8">Branded member app · management portal · published under your name</text>
+
+  <!-- Footer tag -->
+  <rect x="96" y="536" width="270" height="8" rx="4" fill="#f59e0b" />
+  <text x="96" y="586" font-family="'Geist', Arial, sans-serif" font-size="24" font-weight="600" fill="#a1a1aa">iCentric Systems Ltd · Harbour SW Development</text>
+</svg>

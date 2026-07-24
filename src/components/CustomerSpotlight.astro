@@ -1,0 +1,95 @@
+---
+import DeviceFrame from './DeviceFrame.astro';
+import { spotlight as s } from '../data/site';
+---
+
+<section class="relative overflow-hidden border-y border-ink-200" style={`background:${s.band}`}>
+  <!-- brand glow -->
+  <div class="absolute -top-24 right-0 h-96 w-96 rounded-full blur-3xl" style={`background:${s.accent}; opacity:0.14`}></div>
+  <div class="absolute -bottom-32 -left-16 h-96 w-96 rounded-full blur-3xl" style={`background:${s.accent}; opacity:0.10`}></div>
+
+  <div class="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24">
+    <!-- Header -->
+    <div class="max-w-2xl">
+      <p class="text-sm font-medium uppercase tracking-wider" style={`color:${s.accent}`}>{s.eyebrow}</p>
+      <div class="mt-5 flex items-center gap-4">
+        <div class="h-14 w-14 shrink-0 overflow-hidden rounded-xl ring-1 ring-white/15">
+          <img src={s.logo} alt={`${s.name} logo`} class="h-full w-full object-cover" />
+        </div>
+        <div>
+          <h2 class="display text-3xl md:text-4xl text-white">{s.name}</h2>
+          <p class="mt-0.5 text-sm" style={`color:${s.accent}`}>{s.descriptor}</p>
+        </div>
+      </div>
+      <p class="mt-6 text-lg leading-relaxed text-white/80">{s.blurb}</p>
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <a
+          href={s.website}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-1 rounded-xl px-5 py-3 font-semibold text-ink-900 transition-opacity hover:opacity-90"
+          style={`background:${s.accent}`}
+        >
+          Visit {s.name} &rarr;
+        </a>
+        {s.appStore && (
+          <a
+            href={s.appStore}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/20 transition-colors hover:bg-white/15"
+          >
+            Download on the App Store
+          </a>
+        )}
+        {s.playStore && (
+          <a
+            href={s.playStore}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/20 transition-colors hover:bg-white/15"
+          >
+            Get it on Google Play
+          </a>
+        )}
+      </div>
+    </div>
+
+    <!-- Device showcase across the screen -->
+    <div class="mt-14 flex flex-col items-center justify-center gap-6 sm:flex-row sm:items-end sm:gap-5 md:gap-8">
+      <DeviceFrame
+        variant="phone"
+        src={s.shots.mobile[0]}
+        alt={`${s.name} member app`}
+        caption="Member app"
+        iconSrc={s.logo}
+        tint={s.accent}
+        class="order-2 w-44 sm:order-1 md:w-48"
+      />
+      <DeviceFrame
+        variant="browser"
+        src={s.shots.web}
+        alt={`${s.name} management portal`}
+        label="app.samwilsonzara.com"
+        caption="Management portal"
+        iconSrc={s.logo}
+        tint={s.accent}
+        objectPos="object-left-top"
+        class="order-1 w-full max-w-xl sm:order-2"
+      />
+      <DeviceFrame
+        variant="phone"
+        src={s.shots.mobile[1]}
+        alt={`${s.name} workout logging`}
+        caption="Log workout"
+        iconSrc={s.logo}
+        tint={s.accent}
+        class="order-3 hidden w-44 md:block md:w-48"
+      />
+    </div>
+
+    <p class="mt-10 text-center text-sm text-white/60">
+      Your club could be next. <a href="/contact/" class="font-medium text-white underline underline-offset-4 hover:no-underline">Book a demo &rarr;</a>
+    </p>
+  </div>
+</section>

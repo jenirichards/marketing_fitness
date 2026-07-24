@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand · harbour navy ----------------------------------------- */
+  /* Copied verbatim from the Harbour SW studio site (harbourSwIce/src/styles/
+     global.css) so this marketing site stays in exact step with the brand. */
+  --color-brand-50:  #f4f7fb;
+  --color-brand-100: #e5ecf6;
+  --color-brand-200: #c2d2e8;
+  --color-brand-300: #8fadd5;
+  --color-brand-400: #5980bb;
+  --color-brand-500: #355da1;
+  --color-brand-600: #254886;
+  --color-brand-700: #1d3a6d;
+  --color-brand-800: #172e57;
+  --color-brand-900: #0f1f3d;
+  --color-brand-950: #081328;
+
+  /* Ink · warm neutrals (replaces slate-*) ----------------------- */
+  --color-ink-50:  #fafafa;
+  --color-ink-100: #f4f4f5;
+  --color-ink-200: #e4e4e7;
+  --color-ink-300: #d4d4d8;
+  --color-ink-400: #a1a1aa;
+  --color-ink-500: #71717a;
+  --color-ink-600: #52525b;
+  --color-ink-700: #3f3f46;
+  --color-ink-800: #27272a;
+  --color-ink-900: #18181b;
+  --color-ink-950: #09090b;
+
+  /* Accent · amber ---------------------------------------------- */
+  --color-accent-50:  #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+
+  /* Fitness secondary accent · teal ----------------------------- */
+  /* Used sparingly for eyebrows/highlights — matches the per-product fitness
+     accent in the studio site's products.ts and the app's own theming. */
+  --color-teal-50:  #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Display headings — tighter tracking, optical sizing ---------- */
+.display {
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  font-weight: 700;
+}
