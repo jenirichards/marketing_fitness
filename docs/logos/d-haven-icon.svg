@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Harbour Fitness · Option D "Haven" · app icon / favicon -->
+<svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#12233f" />
+  <path d="M27 15 A 17 17 0 0 0 27 49" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" />
+  <path d="M37 15 A 17 17 0 0 1 37 49" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" />
+  <rect x="24" y="28.5" width="16" height="7" rx="3.5" fill="#f59e0b" />
+</svg>

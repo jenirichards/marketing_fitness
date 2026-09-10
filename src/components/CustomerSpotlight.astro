@@ -1,4 +1,5 @@
 ---
+import StoreBadges from './StoreBadges.astro';
 import DeviceFrame from './DeviceFrame.astro';
 import { spotlight as s } from '../data/site';
 ---
@@ -11,7 +12,7 @@ import { spotlight as s } from '../data/site';
   <div class="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24">
     <!-- Header -->
     <div class="max-w-2xl">
-      <p class="text-sm font-medium uppercase tracking-wider" style={`color:${s.accent}`}>{s.eyebrow}</p>
+      <p class="eyebrow" style={`color:${s.accent}`}>{s.eyebrow}</p>
       <div class="mt-5 flex items-center gap-4">
         <div class="h-14 w-14 shrink-0 overflow-hidden rounded-xl ring-1 ring-white/15">
           <img src={s.logo} alt={`${s.name} logo`} class="h-full w-full object-cover" />
@@ -32,26 +33,7 @@ import { spotlight as s } from '../data/site';
         >
           Visit {s.name} &rarr;
         </a>
-        {s.appStore && (
-          <a
-            href={s.appStore}
-            target="_blank"
-            rel="noopener"
-            class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/20 transition-colors hover:bg-white/15"
-          >
-            Download on the App Store
-          </a>
-        )}
-        {s.playStore && (
-          <a
-            href={s.playStore}
-            target="_blank"
-            rel="noopener"
-            class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold text-white ring-1 ring-white/20 transition-colors hover:bg-white/15"
-          >
-            Get it on Google Play
-          </a>
-        )}
+        <StoreBadges appStore={s.appStore} playStore={s.playStore} height={44} />
       </div>
     </div>
 

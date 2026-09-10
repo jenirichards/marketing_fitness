@@ -1,15 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import Pillar from '../components/Pillar.astro';
-import FeatureCard from '../components/FeatureCard.astro';
 import DeviceFrame from '../components/DeviceFrame.astro';
-import CustomerSpotlight from '../components/CustomerSpotlight.astro';
+import ClubTiles from '../components/ClubTiles.astro';
 import Faq from '../components/Faq.astro';
-import { site, pillars, features } from '../data/site';
+import {
+  site, reasons, flow, launch, alternatives, pricing, covers, pricingNote, spotlight,
+} from '../data/site';
 
-const title = `${site.name} — white-labelled club apps for the modern gym`;
+const title = `${site.name} - your whole club online, under your own name`;
 const description =
-  'Give your gym its own branded app for members to log and track every session — built, published and run for you. Manage classes, workouts and members from one branded web portal.';
+  'We build your gym’s website, publish your own iOS and Android apps under your name, and run the portal behind both. Members book on the site, log every session in the app, and you see all of it in one place.';
 
 const siteUrl = Astro.site?.href ?? 'https://harbourfitness.co.uk';
 const logoUrl = new URL('/logos/harbourFitnessIcon.svg', siteUrl).href;
@@ -23,14 +23,11 @@ const organizationLd = {
   url: siteUrl,
   logo: logoUrl,
   email: site.email,
-  description:
-    'White-labelled club apps for gyms and studios: a branded member app for logging and tracking sessions, plus a management portal for classes, workouts and members.',
+  description,
   areaServed: { '@type': 'Country', name: 'United Kingdom' },
+  parentOrganization: { '@type': 'Organization', name: site.studio, url: site.studioUrl },
   contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'sales',
-    email: site.email,
-    areaServed: 'GB',
+    '@type': 'ContactPoint', contactType: 'sales', email: site.email, areaServed: 'GB',
   },
 };
 
@@ -43,105 +40,188 @@ const softwareLd = {
   image: logoUrl,
   applicationCategory: 'HealthApplication',
   operatingSystem: 'iOS, Android, Web',
-  publisher: {
-    '@type': 'Organization',
-    name: site.studio,
-    alternateName: site.company,
-    url: siteUrl,
-  },
+  publisher: { '@type': 'Organization', name: site.studio, alternateName: site.company, url: site.studioUrl },
   offers: {
     '@type': 'Offer',
-    price: '50',
+    price: '250',
     priceCurrency: 'GBP',
-    description: 'Club subscription from £50/month plus a one-off setup fee.',
+    description: `${pricing.setup} one-off setup, then ${pricing.monthly}/month plus ${pricing.perMember} per app member.`,
   },
 };
+
+const proof = [
+  { h: 'Website, apps and portal - one system', s: 'Not three tools bolted together' },
+  { h: 'Live on the App Store &amp; Google&nbsp;Play', s: 'Published under the club’s own name' },
+  { h: `${pricing.setup} setup, then ${pricing.monthly}/month`, s: 'Every feature, every club, always' },
+  { h: `Built &amp; run by <a href="${site.studioUrl}" class="underline decoration-ink-300 underline-offset-2 hover:decoration-accent-500">${site.studio}</a>`,
+    s: 'Hosting, updates and store admin included' },
+];
 ---
 
 <Base title={title} description={description}>
   <!-- ============ HERO ============ -->
   <section class="relative overflow-hidden border-b border-ink-200">
-    <div class="absolute -top-32 -right-24 h-96 w-96 rounded-full bg-accent-200/40 blur-3xl -z-10"></div>
-    <div class="absolute -bottom-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-brand-200/50 blur-3xl -z-10"></div>
-
-    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24 grid items-center gap-12 lg:grid-cols-2">
+    <div class="pointer-events-none absolute -top-40 -right-32 h-[34rem] w-[34rem] rounded-full bg-accent-200/50 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-48 -left-40 h-[30rem] w-[30rem] rounded-full bg-brand-200/45 blur-3xl"></div>
+    <div class="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24 grid items-center gap-12 lg:grid-cols-2">
       <div class="min-w-0">
-        <p class="text-sm font-medium uppercase tracking-wider text-teal-700">
-          Harbour Fitness <span class="mx-1 text-ink-300">·</span> for gyms &amp; studios
-        </p>
-        <h1 class="display mt-4 text-4xl sm:text-5xl text-brand-950">
-          An app for your gym?, <span class="text-brand-600">no problem.</span>
+        <p class="eyebrow text-accent-700">Websites, apps &amp; club management for gyms &amp; studios</p>
+        <h1 class="display mt-5 text-4xl sm:text-5xl lg:text-[3.05rem] text-brand-950">
+          Your whole club online.<br />Under your own name.
         </h1>
         <p class="mt-6 max-w-xl text-lg text-ink-600 leading-relaxed">
-          Your gym/studio can have a fully branded app — under its own name on the App Store and
-          Google Play — for members to log and track their sessions. You manage classes, workouts
-          and members from one branded web portal. We build it, publish it, and run it for you.
+          We build your club’s website, publish your own iOS and Android app under
+          <em class="not-italic font-semibold text-brand-950">your</em> name, and run the portal
+          behind both. Members find you, book and pay on the site, log every session in the app -
+          and you see all of it in one place.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/contact/" class="rounded-xl bg-brand-700 px-5 py-3 font-medium text-white shadow-sm hover:bg-brand-800 transition-colors">
-            Book a demo
+          <a href="/contact/" class="rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 shadow-sm hover:bg-accent-400 transition-colors">
+            Book a 20-minute demo
           </a>
-          <a href="/how-it-works/" class="rounded-xl border border-ink-300 bg-white px-5 py-3 font-medium text-ink-800 hover:border-brand-400 hover:text-brand-700 transition-colors">
-            See how it works
+          <a href={spotlight.website} class="rounded-xl border border-ink-300 bg-white px-5 py-3 font-medium text-ink-800 hover:border-accent-500 hover:text-accent-700 transition-colors">
+            See a club that’s live &rarr;
           </a>
         </div>
-        <p class="mt-5 text-sm text-ink-500">{site.motto}</p>
+        <p class="mt-5 text-sm text-ink-500">
+          No dev team, no design project, no app store account of your own needed.
+        </p>
       </div>
 
-      <!-- Hero device composition — phone layered IN FRONT of the web view -->
-      <div class="relative min-w-0 pb-6">
+      <div class="relative min-w-0 pb-[210px] sm:pb-[225px]">
         <DeviceFrame
           variant="browser"
-          src="/screenshots/web/dashboard.png"
-          alt="Harbour Fitness management portal dashboard"
-          label="app.yourgym.co.uk"
-          caption="Management portal · Dashboard"
+          src="/screenshots/web/club-today.png"
+          alt="The Harbour Fitness management portal, showing today's sessions and members waiting for approval"
+          label="app.yourgym.co.uk/clubDashboard"
+          caption="Management portal · Club today"
+          zoom={1.95}
+          {/* Framed below the stat-card row on purpose: two of those four cards
+              currently read 0 and £0, and in a hero they would be the biggest
+              numbers on the page. This starts at "On today" instead, which has
+              real session times, and runs down into Training. Move the second
+              number back to ~0.07 once the demo data is in. */}
+          focus={[0.19, 0.355]}
           class="relative z-10"
         />
-        <div class="absolute -bottom-8 right-0 z-30 w-40 sm:w-44 md:w-48">
+        <div class="absolute top-2 -right-6 z-30 w-52 sm:w-60 md:w-64">
           <DeviceFrame
             variant="phone"
-            src="/screenshots/mobile/home.png"
-            alt="Your gym's branded member app"
+            src="/screenshots/customers/samwilsonzara/mobile-1.png"
+            alt="A member logging a set in a live club app"
             caption="Member app"
+            {/* DeviceFrame caps the phone at 260px; the hero one needs to be the
+                biggest phone on the page, not the smallest, so it overrides. */}
+            class="!max-w-[264px]"
           />
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ============ THREE PILLARS ============ -->
-  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-    <p class="text-sm font-medium uppercase tracking-wider text-teal-700">One platform, three parts</p>
-    <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Everything your club needs to run training.</h2>
-    <p class="mt-4 max-w-2xl text-ink-600 leading-relaxed">
-      A member app they’ll actually open, a management portal you’ll actually use, and a store
-      presence that carries your name — not a generic third-party one.
-    </p>
-    <div class="mt-10 grid gap-6 md:grid-cols-3">
-      {pillars.map((p) => <Pillar {...p} />)}
+    <!-- proof strip -->
+    <div class="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 pb-14">
+      <div class="grid gap-px sm:grid-cols-2 lg:grid-cols-4 border-t border-ink-200">
+        {proof.map((p) => (
+          <div class="flex flex-col py-5 pr-6 border-b border-ink-200 sm:border-b-0">
+            <p class="text-sm font-semibold text-brand-950" set:html={p.h} />
+            <p class="mt-auto pt-1 text-sm text-ink-500">{p.s}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- ============ MEMBER APP ============ -->
-  <section class="border-t border-ink-200 bg-ink-50">
+  <!-- ============ WHY CLUBS DO THIS ============ -->
+  <section class="bg-surface-2 border-b border-ink-200">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <p class="eyebrow text-accent-700">Why clubs do this</p>
+      <h2 class="display mt-4 text-3xl md:text-4xl text-brand-950 max-w-2xl">
+        Members don’t leave because the training was bad.
+      </h2>
+      <p class="mt-5 max-w-2xl text-lg text-ink-600 leading-relaxed">
+        They leave because nothing ever showed them it was working. The members who log their
+        sessions, watch their numbers move, and feel a coach paying attention are the ones still
+        turning up in month six.
+      </p>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {reasons.map((r) => (
+          <div class="rounded-2xl border border-ink-200 bg-white p-7">
+            <h3 class="text-xl font-bold tracking-tight text-brand-950">{r.title}</h3>
+            <p class="mt-3 text-ink-600 leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UNDER YOUR OWN NAME ============ -->
+  <section class="bg-brand-900 text-white">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20 grid items-center gap-14 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow text-accent-400">It’s yours, not ours</p>
+        <h2 class="display mt-4 text-3xl md:text-4xl">
+          Your name on the store.<br />Your logo on their phone.
+        </h2>
+        <p class="mt-5 text-onbrand-body leading-relaxed">
+          Every club gets its own app and its own website - its own store listing, its own icon, its
+          own domain, its own colours. Members search for <b class="text-white">your gym</b> and
+          download <b class="text-white">your gym’s app</b>.
+        </p>
+        <p class="mt-4 text-onbrand-body leading-relaxed">
+          Not a marketplace. Not a directory you’re listed in alongside the gym down the road. Not a
+          third-party brand sitting between you and your members.
+        </p>
+        <p class="mt-4 text-onbrand-body leading-relaxed">
+          <b class="text-white">And your members are yours.</b> Every member record, every session
+          logged, every booking and every payment belongs to the club. We hold it and run it for you -
+          we don’t own it.
+        </p>
+        <ul class="mt-7 space-y-3">
+          {[
+            'Your identity end to end - site, icon, splash, colours, tone',
+            'Published on both stores under your club’s own developer name',
+            'Multi-site operators: one backend, a brand per location if you want it',
+            'The club owns the member data - the list, the bookings and the payments',
+          ].map((t) => (
+            <li class="flex items-start gap-3 text-onbrand-body">
+              <svg class="mt-1 size-4 shrink-0 text-accent-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5" /></svg>
+              <span>{t}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <ClubTiles />
+    </div>
+  </section>
+
+  <!-- ============ THE CLUB'S OWN WEBSITE ============ -->
+  <section class="border-b border-ink-200">
     <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20 grid items-center gap-12 lg:grid-cols-2">
-      <div class="order-2 lg:order-1 flex justify-center gap-4">
-        <DeviceFrame variant="phone" src="/screenshots/mobile/log.png" alt="Logging a workout in the member app" caption="Log workout" class="max-w-[220px]" />
-        <DeviceFrame variant="phone" src="/screenshots/mobile/progress.png" alt="Member progress tracking" caption="Progress" class="mt-10 hidden sm:block max-w-[220px]" />
+      <div class="order-2 lg:order-1">
+        <DeviceFrame
+          variant="browser"
+          src="/screenshots/customers/samwilsonzara/website.jpg"
+          alt="The Sam Wilson Zara website, built and run on Harbour Fitness"
+          label="samwilsonzara.com"
+          caption="A club’s own website"
+        />
       </div>
       <div class="order-1 lg:order-2">
-        <p class="text-sm font-medium uppercase tracking-wider text-teal-700">For your members</p>
-        <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">A workout app they’ll actually open.</h2>
-        <p class="mt-4 text-ink-600 leading-relaxed">
-          Members capture sets, reps, weight, time and speed straight from their phone between sets —
-          no clipboards, no end-of-week catch-up. Their history and progress build session over
-          session, so they see the results that keep them coming back.
+        <p class="eyebrow text-accent-700">Your website too</p>
+        <h2 class="display mt-4 text-3xl md:text-4xl text-brand-950">
+          The app keeps the members you have. The website brings the next ones.
+        </h2>
+        <p class="mt-5 text-ink-600 leading-relaxed">
+          Your programmes, your events, your prices and a real checkout - on your own domain, in your
+          own colours. Members book and pay on the site rather than emailing you to ask whether
+          there’s space on Tuesday.
         </p>
         <ul class="mt-6 space-y-3">
-          {['Log every set the moment it happens', 'Personal workout history and progress charts', 'Downloaded from the store under your gym’s name'].map((t) => (
+          {['Programmes and events, priced and bookable',
+            'Card payments and membership plans, on your domain',
+            'Updated from the portal - no developer, no ticket'].map((t) => (
             <li class="flex items-start gap-3 text-ink-700">
-              <span class="mt-1 inline-block size-2 shrink-0 rounded-full bg-teal-600"></span>
+              <span class="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-accent-500"></span>
               <span>{t}</span>
             </li>
           ))}
@@ -150,46 +230,205 @@ const softwareLd = {
     </div>
   </section>
 
-  <!-- ============ MANAGEMENT PORTAL ============ -->
-  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20 grid items-center gap-12 lg:grid-cols-2">
-    <div>
-      <p class="text-sm font-medium uppercase tracking-wider text-brand-600">For coaches &amp; managers</p>
-      <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Run it all from one branded portal.</h2>
-      <p class="mt-4 text-ink-600 leading-relaxed">
-        Build a reusable exercise library once, assemble it into classes, and schedule recurring
-        sessions without rebuilding them every week. See your whole roster, manage access, and
-        watch class-wide consistency and progress — so you know exactly where to step in.
+  <!-- ============ ONE SYSTEM, NOT THREE ============ -->
+  <section class="bg-surface-3 border-b border-ink-200">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <p class="eyebrow text-accent-700">One system, not three</p>
+      <h2 class="display mt-4 text-3xl md:text-4xl text-brand-950 max-w-2xl">
+        Someone books on Tuesday. By Wednesday they’re in the class.
+      </h2>
+      <p class="mt-5 max-w-2xl text-lg text-ink-600 leading-relaxed">
+        Your website, your app and your portal are the same system wearing three faces. A member who
+        pays on the site is on the register, in the roster, and logging sets in the app - without
+        anybody re-typing a name.
       </p>
-      <ul class="mt-6 space-y-3">
-        {['Exercise library and class catalogue, built once', 'Recurring session scheduling', 'Member roster, access and progress reports'].map((t) => (
-          <li class="flex items-start gap-3 text-ink-700">
-            <span class="mt-1 inline-block size-2 shrink-0 rounded-full bg-brand-600"></span>
-            <span>{t}</span>
+      <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {flow.map((f, i) => (
+          <li class={`rounded-2xl border p-6 ${i === flow.length - 1 ? 'border-accent-500 bg-accent-50' : 'border-ink-200 bg-white'}`}>
+            <p class="eyebrow text-accent-700">{f.k}</p>
+            <p class="mt-3 font-bold tracking-tight text-brand-950">{f.title}</p>
+            <p class="mt-2 text-sm text-ink-600 leading-relaxed">{f.body}</p>
           </li>
         ))}
-      </ul>
+      </ol>
     </div>
-    <DeviceFrame variant="browser" src="/screenshots/web/sessions.png" alt="Class and session management in the portal" label="app.yourgym.co.uk/sessions" caption="Classes & sessions" />
   </section>
 
-  <!-- ============ FEATURE GRID ============ -->
-  <section class="border-t border-ink-200 bg-ink-50">
+  <!-- ============ THE MEMBER APP ============ -->
+  <section class="border-b border-ink-200">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20 grid items-center gap-12 lg:grid-cols-2">
+      <div class="order-2 lg:order-1 flex justify-center gap-4">
+        <DeviceFrame variant="phone" src="/screenshots/customers/samwilsonzara/mobile-1.png" alt="Logging a set during a session" caption="Log a set" class="max-w-[220px]" />
+        <DeviceFrame variant="phone" src="/screenshots/customers/samwilsonzara/mobile-2.png" alt="A member's session history" caption="History" class="mt-10 hidden sm:block max-w-[220px]" />
+      </div>
+      <div class="order-1 lg:order-2">
+        <p class="eyebrow text-accent-700">What your members get</p>
+        <h2 class="display mt-4 text-3xl md:text-4xl text-brand-950">
+          Logged between sets. Not remembered later.
+        </h2>
+        <p class="mt-5 text-ink-600 leading-relaxed">
+          Members open the app with the bar still racked. Sets, reps, weight, time and speed go in
+          where they happen - then the history builds itself, session after session, into the thing
+          that keeps them coming back.
+        </p>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2">
+          {[
+            ['Today’s session, already there', 'Members walk in and their coach’s programme is waiting - targets, sets and notes for the day.'],
+            ['How it felt, not just what it was', 'A quick feel and difficulty rating per set, so you know who to push and who to pull back.'],
+            ['Their whole history', 'Every session they’ve ever done, searchable - the proof that the last six months meant something.'],
+            ['Progress they can see', 'Weight and consistency plotted over time. The line going up is the retention tool.'],
+          ].map(([t, b]) => (
+            <div>
+              <p class="font-bold tracking-tight text-brand-950">{t}</p>
+              <p class="mt-1.5 text-sm text-ink-600 leading-relaxed">{b}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE PORTAL ============ -->
+  <section class="bg-surface-2 border-b border-ink-200">
     <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">What you get</p>
-      <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Everything your club actually needs.</h2>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {features.map((f) => <FeatureCard feature={f} />)}
+      <div class="max-w-2xl">
+        <p class="eyebrow text-accent-700">What you get</p>
+        <h2 class="display mt-4 text-3xl md:text-4xl text-brand-950">Set it up once. It runs every week.</h2>
+        <p class="mt-5 text-lg text-ink-600 leading-relaxed">
+          Build your exercise library once. Assemble it into classes once. Schedule the recurring
+          sessions once. Then the club dashboard leads with what actually needs doing today - who is
+          waiting to be approved, what has been taken, and which sessions are running.
+        </p>
       </div>
-      <div class="mt-8">
-        <a href="/features/" class="inline-flex text-sm font-medium text-brand-700 hover:underline">
-          Explore every feature &rarr;
-        </a>
+      <div class="mt-10">
+        <DeviceFrame variant="browser" src="/screenshots/web/classes-schedule.png" alt="Classes and schedule in the management portal, with capacity and the next session for each class" label="app.yourgym.co.uk/classesAdmin" caption="Classes &amp; schedule" />
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          ['Exercise library', 'Define each movement once - description, defaults, muscle groups - then pull it into any class.'],
+          ['Classes & recurring sessions', 'A class catalogue built once and scheduled on repeat, instead of rebuilt every Sunday night.'],
+          ['Members, memberships & payments', 'Who’s in which class, who joined this month, what has been taken and what needs refunding.'],
+          ['Consistency & drop-off', 'Class-wide views that surface who’s slipping while there’s still time to pick up the phone.'],
+          ['Per-member history', 'Walk into a review with six months of a member’s actual numbers rather than a memory of them.'],
+          ['Roles that fit the club', 'Owners, coaches and members each see their own thing - no admin tool nobody wants to open.'],
+        ].map(([t, b]) => (
+          <div class="rounded-2xl border border-ink-200 bg-white p-6">
+            <p class="font-bold tracking-tight text-brand-950">{t}</p>
+            <p class="mt-2 text-sm text-ink-600 leading-relaxed">{b}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- ============ CUSTOMER SPOTLIGHT ============ -->
-  <CustomerSpotlight />
+  <!-- ============ HOW IT LANDS ============ -->
+  <section class="bg-brand-900 text-white">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <p class="eyebrow text-accent-400">How it lands</p>
+      <h2 class="display mt-4 text-3xl md:text-4xl max-w-2xl">
+        From your logo to the App Store in eight weeks.
+      </h2>
+      <p class="mt-5 max-w-2xl text-onbrand-body leading-relaxed">
+        It isn’t a software project. There is nothing for you to install, nobody for you to hire, and
+        no decision you need a developer to help you make. Your website goes live around the halfway
+        mark, so you have something earning before the apps have cleared review.
+      </p>
+      <ol class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {launch.map((s, i) => (
+          <li class={`border-t-2 pt-5 ${i === 0 ? 'border-accent-400' : 'border-white/15'}`}>
+            <p class={`eyebrow ${i === 0 ? 'text-accent-400' : 'text-onbrand-dim'}`}>{s.when}</p>
+            <p class="mt-3 text-xl font-extrabold tracking-tight">{s.title}</p>
+            <p class="mt-2 text-sm text-onbrand-body leading-relaxed">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+
+      <!-- instead of -->
+      <div class="mt-16 border-t border-white/10 pt-14">
+        <p class="eyebrow text-accent-400">Instead of</p>
+        <h2 class="display mt-4 text-3xl md:text-4xl max-w-2xl">
+          A website here, a booking tool there, and someone else’s app.
+        </h2>
+        <div class="mt-10 grid gap-4 lg:grid-cols-4">
+          {alternatives.map((a) => (
+            <div class="rounded-2xl border border-white/10 p-6">
+              <p class="font-semibold tracking-tight text-onbrand-dim">{a.title}</p>
+              <p class="mt-3 text-sm text-onbrand-body leading-relaxed">{a.body}</p>
+            </div>
+          ))}
+          <div class="rounded-2xl border border-accent-400 bg-accent-500/10 p-6">
+            <p class="font-extrabold tracking-tight text-white">Harbour Fitness</p>
+            <p class="mt-3 text-sm text-onbrand-body leading-relaxed">
+              Your site, your app, your programme and your members’ progress - one system under your
+              own name, and one place you actually open.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="border-b border-ink-200">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <div class="max-w-2xl">
+        <p class="eyebrow text-accent-700">Pricing</p>
+        <h2 class="display mt-4 text-3xl md:text-4xl text-brand-950">
+          One price. Every feature. Including the ones nobody’s asked for yet.
+        </h2>
+        <p class="mt-5 text-lg text-ink-600 leading-relaxed">
+          There is no tier where the good bit is locked away, and no upgrade to negotiate when you
+          grow. If any club on the platform asks for something and we build it, it lands in your app
+          too.
+        </p>
+      </div>
+
+      <div class="mt-10 grid items-start gap-6 lg:grid-cols-[1.15fr_.85fr]">
+        <div class="rounded-3xl border border-ink-200 bg-white p-7 sm:p-9">
+          {[
+            [pricing.setup, '', 'Once, to get started', 'Full design and build of your new website, your branded iOS and Android apps, and your club set up in the portal.'],
+            [pricing.monthly, '/mo', 'Support, hosting and everything after', 'The portal, both apps, the website, help for your members, and every new feature - whether you asked for it or somebody else did.'],
+            [pricing.perMember, '/mo', 'Per member who actually uses the app', 'Not per member on your books. A member who never downloads it never appears on your bill.'],
+          ].map(([amt, per, t, b], i) => (
+            <div class={`flex flex-wrap items-baseline gap-x-6 gap-y-2 py-5 ${i < 2 ? 'border-b border-ink-100' : ''}`}>
+              <p class="display w-28 shrink-0 text-4xl text-brand-950 tabular-nums">
+                {amt}<span class="text-sm font-semibold tracking-normal text-ink-500">{per}</span>
+              </p>
+              <div class="min-w-0 flex-1">
+                <p class="font-bold tracking-tight text-brand-950">{t}</p>
+                <p class="mt-1 text-sm text-ink-600 leading-relaxed">{b}</p>
+              </div>
+            </div>
+          ))}
+
+          <!-- Per-member pricing is impossible to feel until somebody does the
+               arithmetic at a real headcount, so we do it. -->
+          <div class="mt-6 rounded-2xl bg-surface-3 p-5 sm:p-6">
+            <p class="eyebrow text-ink-500">What that looks like - a club with {pricing.example.members} members on the app</p>
+            <dl class="mt-3 text-sm text-ink-700">
+              <div class="flex justify-between py-1"><dt>Support, hosting, website and both apps</dt><dd class="tabular-nums">{pricing.example.base}</dd></div>
+              <div class="flex justify-between py-1"><dt>{pricing.example.members} app members &times; {pricing.perMember}</dt><dd class="tabular-nums">{pricing.example.members_cost}</dd></div>
+              <div class="mt-2 flex justify-between border-t border-ink-300 pt-3 text-base font-extrabold text-brand-950"><dt>Every month</dt><dd class="tabular-nums">{pricing.example.total}</dd></div>
+            </dl>
+            <p class="mt-2 text-sm text-ink-500">Plus {pricing.setup} once, at the start.</p>
+          </div>
+        </div>
+
+        <div class="rounded-3xl bg-brand-950 p-7 sm:p-8">
+          <p class="eyebrow text-accent-400">What the {pricing.monthly} covers</p>
+          <ul class="mt-4 space-y-3">
+            {covers.map((c) => (
+              <li class="flex items-start gap-3 text-sm text-onbrand-body leading-relaxed">
+                <svg class="mt-1 size-3.5 shrink-0 text-accent-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5" /></svg>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <p class="mt-6 text-sm text-ink-500">{pricingNote}</p>
+    </div>
+  </section>
 
   <!-- ============ FAQ ============ -->
   <Faq />
@@ -197,18 +436,27 @@ const softwareLd = {
   <!-- ============ CTA BAND ============ -->
   <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16">
     <div class="relative overflow-hidden rounded-3xl bg-brand-900 p-8 text-white md:p-14">
-      <div class="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-accent-500/20 blur-3xl"></div>
-      <div class="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-accent-500/20 blur-3xl"></div>
       <div class="relative max-w-2xl">
-        <p class="text-sm font-medium uppercase tracking-wider text-accent-300">Get started</p>
-        <h2 class="display mt-3 text-3xl md:text-4xl">Put your gym’s app in our hands.</h2>
-        <p class="mt-4 text-brand-100 leading-relaxed">
-          Tell us about your club and we’ll walk you through the management tools, show you a branded
-          build, and help your first cohort log their first workouts.
+        <p class="eyebrow text-accent-400">Get started</p>
+        <h2 class="display mt-4 text-3xl md:text-4xl">See your own logo on it.</h2>
+        <p class="mt-5 text-onbrand-body leading-relaxed">
+          Twenty minutes, a screen share, and your club’s name in the mockup. We’ll show you the
+          website, the portal and the member app, and roughly what your first three months would
+          look like.
         </p>
-        <a href="/contact/" class="mt-6 inline-block rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 hover:bg-accent-400 transition-colors">
-          Book a demo &rarr;
-        </a>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="/contact/" class="rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 hover:bg-accent-400 transition-colors">
+            Book a 20-minute demo
+          </a>
+          <a href={`mailto:${site.email}`} class="rounded-xl border border-white/25 px-5 py-3 font-medium text-white hover:border-white/50 transition-colors">
+            Email us instead
+          </a>
+        </div>
+        <p class="mt-5 text-sm text-onbrand-dim">
+          {site.email} · {site.name} is built by
+          <a href={site.studioUrl} class="font-medium text-accent-400 hover:underline">{site.studio}</a>
+        </p>
       </div>
     </div>
   </section>

@@ -1,22 +1,19 @@
 ---
 import { nav } from '../data/site';
+import Logo from './Logo.astro';
 ---
 
 <header class="border-b border-ink-200 bg-white/80 backdrop-blur sticky top-0 z-20">
   <nav class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-    <a href="/" class="block shrink-0" aria-label="Harbour Fitness — home">
-      <img
-        src="/logos/harbourFitnessLogo.svg"
-        alt="Harbour Fitness"
-        class="h-8 md:h-9 w-auto"
-      />
+    <a href="/" class="block shrink-0" aria-label="Harbour Fitness - home">
+      <Logo size={34} class="text-lg md:text-xl" />
     </a>
 
     <!-- Desktop links -->
     <ul class="hidden md:flex items-center gap-7 text-sm text-ink-600">
       {nav.map((l) => (
         <li>
-          <a href={l.href} class="hover:text-brand-700 transition-colors">{l.label}</a>
+          <a href={l.href} class="hover:text-accent-700 transition-colors">{l.label}</a>
         </li>
       ))}
     </ul>
@@ -24,7 +21,7 @@ import { nav } from '../data/site';
     <!-- Desktop CTA -->
     <a
       href="/contact/"
-      class="hidden md:inline-flex items-center gap-1 rounded-lg bg-brand-700 px-4 py-2 text-sm font-medium text-white hover:bg-brand-800 transition-colors"
+      class="hidden md:inline-flex items-center gap-1 rounded-lg bg-accent-500 px-4 py-2 text-sm font-semibold text-brand-950 hover:bg-accent-400 transition-colors"
     >
       Book a demo &rarr;
     </a>
@@ -33,7 +30,7 @@ import { nav } from '../data/site';
     <button
       id="mobile-menu-button"
       type="button"
-      class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-ink-700 hover:bg-ink-100 hover:text-brand-700 transition-colors"
+      class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-ink-700 hover:bg-ink-100 hover:text-accent-700 transition-colors"
       aria-controls="mobile-menu"
       aria-expanded="false"
       aria-label="Toggle menu"
@@ -48,14 +45,14 @@ import { nav } from '../data/site';
     <ul class="mx-auto max-w-6xl px-5 sm:px-6 py-4 flex flex-col gap-1 text-base text-ink-700">
       {nav.map((l) => (
         <li>
-          <a href={l.href} data-menu-link class="block py-2 hover:text-brand-700 transition-colors">{l.label}</a>
+          <a href={l.href} data-menu-link class="block py-2 hover:text-accent-700 transition-colors">{l.label}</a>
         </li>
       ))}
       <li class="pt-3">
         <a
           href="/contact/"
           data-menu-link
-          class="inline-flex items-center gap-1 rounded-lg bg-brand-700 px-4 py-2 text-sm font-medium text-white hover:bg-brand-800 transition-colors"
+          class="inline-flex items-center gap-1 rounded-lg bg-accent-500 px-4 py-2 text-sm font-semibold text-brand-950 hover:bg-accent-400 transition-colors"
         >
           Book a demo &rarr;
         </a>

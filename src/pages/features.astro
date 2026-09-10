@@ -5,18 +5,20 @@ import DeviceFrame from '../components/DeviceFrame.astro';
 import BreadcrumbLd from '../components/BreadcrumbLd.astro';
 import { site, features } from '../data/site';
 
-const title = `Features — ${site.name}`;
+const title = `Features - ${site.name}`;
 const description =
-  'Class management, exercise libraries, mobile workout logging, member rosters, and progress tracking — plus a fully branded app on the App Store and Google Play.';
+  'Class management, exercise libraries, mobile workout logging, member rosters, and progress tracking - plus a fully branded app on the App Store and Google Play.';
 ---
 
 <Base title={title} description={description}>
   <!-- Header -->
-  <section class="border-b border-ink-200">
-    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">Features</p>
+  <section class="relative overflow-hidden border-b border-ink-200">
+    <div class="pointer-events-none absolute -top-40 -right-32 h-[34rem] w-[34rem] rounded-full bg-accent-200/50 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-48 -left-40 h-[30rem] w-[30rem] rounded-full bg-brand-200/45 blur-3xl"></div>
+    <div class="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24">
+      <p class="eyebrow text-accent-700">Features</p>
       <h1 class="display mt-3 text-4xl md:text-5xl text-brand-950 max-w-3xl">
-        A focused toolkit for coaches — and an app members will actually open.
+        A focused toolkit for coaches - and an app members will actually open.
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-ink-600 leading-relaxed">
         Everything your club needs to run training and track member progress, paired with a
@@ -36,7 +38,7 @@ const description =
   <section class="border-t border-ink-200 bg-ink-50">
     <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20 grid items-center gap-12 lg:grid-cols-2">
       <div>
-        <p class="text-sm font-medium uppercase tracking-wider text-brand-600">The management portal</p>
+        <p class="eyebrow text-brand-600">The management portal</p>
         <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Set it up once. Ready every week.</h2>
         <p class="mt-4 text-ink-600 leading-relaxed">
           Define each move once in the exercise library, pull it into any class, and schedule
@@ -54,7 +56,7 @@ const description =
       <DeviceFrame variant="phone" src="/screenshots/mobile/progress.png" alt="Progress tracking in the member app" caption="Progress" class="max-w-[240px]" />
     </div>
     <div class="order-1 lg:order-2">
-      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">The member app</p>
+      <p class="eyebrow text-accent-700">The member app</p>
       <h2 class="display mt-3 text-3xl md:text-4xl text-brand-950">Progress they can see.</h2>
       <p class="mt-4 text-ink-600 leading-relaxed">
         Per-member workout history and class-wide views surface consistency, drop-off and
@@ -72,7 +74,7 @@ const description =
         Get in touch and we’ll walk through the admin tools and help your first cohort log their
         first workouts.
       </p>
-      <a href="/contact/" class="mt-6 inline-block rounded-xl bg-brand-700 px-5 py-3 font-medium text-white hover:bg-brand-800 transition-colors">
+      <a href="/contact/" class="mt-6 inline-block rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 hover:bg-accent-400 transition-colors">
         Book a demo &rarr;
       </a>
     </div>

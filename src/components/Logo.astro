@@ -1,0 +1,33 @@
+---
+// The "Ascent" mark: three rising bars - a plate stack and a progress chart at
+// once. It draws the promise of the product rather than the equipment.
+//
+// Rendered as inline SVG plus real HTML text rather than as <img src="...svg">,
+// because an SVG loaded through <img> is an isolated document and cannot reach
+// the page's webfonts - the wordmark would silently fall back to Arial while
+// the rest of the site sits in Geist. The .svg files in public/logos are kept
+// for the favicon, OG images and anywhere outside this site that needs a file.
+interface Props {
+  /** Icon height in px; the wordmark scales with the surrounding text size. */
+  size?: number;
+  /** On a dark ground the wordmark inverts. */
+  onDark?: boolean;
+  class?: string;
+}
+const { size = 32, onDark = false, class: klass = '' } = Astro.props;
+---
+
+<span class={`inline-flex items-center gap-2.5 ${klass}`}>
+  <svg
+    width={size} height={size} viewBox="0 0 64 64"
+    class="shrink-0" aria-hidden="true" focusable="false"
+  >
+    <rect width="64" height="64" rx="14" fill="#12233f" />
+    <rect x="13" y="38" width="9" height="14" rx="4.5" fill="#ffffff" opacity="0.45" />
+    <rect x="27.5" y="28" width="9" height="24" rx="4.5" fill="#ffffff" opacity="0.8" />
+    <rect x="42" y="14" width="9" height="38" rx="4.5" fill="#f59e0b" />
+  </svg>
+  <span class={`font-extrabold tracking-[-0.035em] ${onDark ? 'text-white' : 'text-brand-950'}`}>
+    Harbour<span class={onDark ? 'text-accent-400' : 'text-accent-700'}>Fitness</span>
+  </span>
+</span>

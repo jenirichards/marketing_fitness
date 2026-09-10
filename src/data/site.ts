@@ -6,7 +6,15 @@ export const site = {
   name: 'Harbour Fitness',
   company: 'iCentric Systems Ltd',
   studio: 'Harbour SW Development',
-  tagline: 'Your gym. Your app. Their sessions, tracked.',
+  /** The parent studio's own site. Harbour Fitness is one of its products, and
+   *  every page links back to it - from the footer, the byline under the closing
+   *  call to action, and the structured data's publisher. */
+  studioUrl: 'https://www.harbour-sw.co.uk',
+  /** The privacy policy is company-wide and lives on the parent site - it names
+   *  Harbour Fitness and the other apps explicitly, so this links there rather
+   *  than duplicating a second policy that could drift out of step. */
+  privacyUrl: 'https://www.harbour-sw.co.uk/privacy/',
+  tagline: 'Your whole club online. Under your own name.',
   email: 'support@icentricsystems.com',
   // Login tagline from the product's Harbour brand (brands.ts).
   motto: 'Train smarter. Every session, tracked.',
@@ -26,14 +34,14 @@ export type IconName =
 
 export type Feature = { icon: IconName; title: string; body: string };
 
-/** The three headline pillars — the whole pitch in three cards. */
+/** The three headline pillars - the whole pitch in three cards. */
 export const pillars: { accent: string; eyebrow: string; title: string; body: string; points: string[] }[] = [
   {
     accent: '#0d9488',
     eyebrow: 'For your members',
     title: 'Their own app to log & track',
     body:
-      'Members get a branded, focused app to log every set, rep, weight, time and speed straight from their phone — and watch their progress build session over session.',
+      'Members get a branded, focused app to log every set, rep, weight, time and speed straight from their phone - and watch their progress build session over session.',
     points: [
       'Log workouts between sets, no clipboard',
       'Personal history and progress charts',
@@ -57,7 +65,7 @@ export const pillars: { accent: string; eyebrow: string; title: string; body: st
     eyebrow: 'On the stores',
     title: 'Published under your own name',
     body:
-      'We publish a fully white-labelled iOS and Android app under your club’s name and branding on the App Store and Google Play — all running on one shared backend that scales across sites.',
+      'We publish a fully white-labelled iOS and Android app under your club’s name and branding on the App Store and Google Play - all running on one shared backend that scales across sites.',
     points: [
       'Your logo, colours and identity',
       'Live on the App Store & Google Play',
@@ -66,13 +74,13 @@ export const pillars: { accent: string; eyebrow: string; title: string; body: st
   },
 ];
 
-/** Full feature grid — verbatim from the product's features.vue. */
+/** Full feature grid - verbatim from the product's features.vue. */
 export const features: Feature[] = [
   {
     icon: 'mobile',
     title: 'Your own branded mobile app',
     body:
-      'We publish a fully branded iOS and Android app for your club, under your club’s name on the App Store and Google Play. Your logo, your colours, your identity — members find and download your app, not a generic one.',
+      'We publish a fully branded iOS and Android app for your club, under your club’s name on the App Store and Google Play. Your logo, your colours, your identity - members find and download your app, not a generic one.',
   },
   {
     icon: 'calendar',
@@ -108,8 +116,79 @@ export const features: Feature[] = [
     icon: 'sliders',
     title: 'Built for the way clubs work',
     body:
-      'Coaches, managers, and members each see exactly what they need — no clutter, no unfamiliar admin tools.',
+      'Coaches, managers, and members each see exactly what they need - no clutter, no unfamiliar admin tools.',
   },
+];
+
+/** Why clubs do this at all - the retention argument, placed before a single
+ *  feature is mentioned. Deliberately argued from the reader's own experience
+ *  rather than from statistics we have no source for. */
+export const reasons: { title: string; body: string }[] = [
+  {
+    title: 'The wins go unseen',
+    body:
+      'Six weeks of hard-won progress lives in the coach’s head and on a paper card. The member never sees the line going up - so they never feel it. Nothing to be proud of, nothing to show a friend, nothing to stay for.',
+  },
+  {
+    title: 'You’re guessing at drift',
+    body:
+      'You can feel who’s slipping, but you can’t see it. By the time you notice someone hasn’t been in for three weeks, the retention conversation is already a month late - and usually over.',
+  },
+  {
+    title: 'Someone else’s logo',
+    body:
+      'Your members finish your session and open a stranger’s app to record it. That app gets the habit, the data and the credit for their progress. Your name is on the door and nowhere else.',
+  },
+];
+
+/** The club app tiles. Sam Wilson Zara is real; Ironline is the demo club that
+ *  already exists in the product (ice/fitness/brands/ironline). The empty slots
+ *  stay empty on purpose - inventing two club logos would be the one thing on
+ *  the page a prospect could catch us out on. */
+export type ClubTile = { name: string; note: string; kind: 'swz' | 'harbour' | 'ironline' | 'empty' };
+export const clubTiles: ClubTile[] = [
+  { name: 'Sam Wilson Zara', note: 'Live on both stores', kind: 'swz' },
+  { name: 'Harbour Fitness', note: 'Our own build', kind: 'harbour' },
+  { name: 'Ironline', note: 'Demo build', kind: 'ironline' },
+  { name: 'Your club here', note: '', kind: 'empty' },
+];
+
+/** Website -> portal -> app -> one record. The band that justifies the price:
+ *  any club can buy a website and any club can buy a booking tool, but not the
+ *  three talking to each other. */
+export const flow: { k: string; title: string; body: string }[] = [
+  { k: 'Your website', title: 'They find you and pay',
+    body: 'Programmes, events, prices and a checkout. Booking and card payment happen on your own domain.' },
+  { k: 'Your portal', title: 'You approve and schedule',
+    body: 'They land in Club today as a pending member. Approve once and the membership, the class place and the payment are all recorded.' },
+  { k: 'Your app', title: 'They train and log it',
+    body: 'The session is already built and waiting on their phone the first time they walk in.' },
+  { k: 'One record', title: 'No re-typing, ever',
+    body: 'One member, one history, one place to look - instead of a booking tool, a spreadsheet and a memory.' },
+];
+
+/** Eight weeks, shaped so the website goes live around the halfway mark and the
+ *  club has something earning before the apps have cleared store review. */
+export const launch: { when: string; title: string; body: string }[] = [
+  { when: 'Weeks 1–2', title: 'We design it',
+    body: 'Send your logo, colours and photos. We design the site and brand the app, and show you both running on a real phone before anything is committed.' },
+  { when: 'Weeks 3–4', title: 'Your website goes live',
+    body: 'Programmes, events, prices and booking, on your own domain. This is the part that starts earning before anything else has shipped.' },
+  { when: 'Weeks 5–6', title: 'Your programme goes in',
+    body: 'Exercise library, classes and the schedule. Most clubs get through it in an afternoon with us sitting alongside.' },
+  { when: 'Weeks 7–8', title: 'Apps hit the stores',
+    body: 'Store accounts, listings, screenshots and the review process - all ours. Then the launch pack: posters, a QR code and the words to say.' },
+];
+
+/** What it replaces. No competitor is named: naming one puts their name on our
+ *  page and invites a rebuttal we don't get to write. */
+export const alternatives: { title: string; body: string }[] = [
+  { title: 'A website that just sits there',
+    body: 'Built once by somebody who has moved on, no way to take a booking, and a price list that has been wrong since March.' },
+  { title: 'A generic tracking app',
+    body: 'Your programming inside someone else’s brand. They own the relationship, the data and the notification that brings the member back.' },
+  { title: 'A booking platform bolt-on',
+    body: 'Built to take a payment and hold a slot. Training is an afterthought bolted to the side of a till, and it never speaks to your site.' },
 ];
 
 /** The operator journey for the How it works page. */
@@ -118,7 +197,7 @@ export const steps: { n: string; title: string; body: string }[] = [
     n: '01',
     title: 'We brand it to your gym',
     body:
-      'Send us your logo and colours. We build your app around your identity — the same navy-grade polish, wearing your name. No design project, no dev team required on your side.',
+      'Send us your logo and colours. We build your app around your identity - the same navy-grade polish, wearing your name. No design project, no dev team required on your side.',
   },
   {
     n: '02',
@@ -130,7 +209,7 @@ export const steps: { n: string; title: string; body: string }[] = [
     n: '03',
     title: 'We publish to the stores',
     body:
-      'Your app goes live on the App Store and Google Play under your club’s own name. Members search for your gym and download your app — not a generic third-party one.',
+      'Your app goes live on the App Store and Google Play under your club’s own name. Members search for your gym and download your app - not a generic third-party one.',
   },
   {
     n: '04',
@@ -142,47 +221,38 @@ export const steps: { n: string; title: string; body: string }[] = [
     n: '05',
     title: 'You see the whole picture',
     body:
-      'Watch your roster, per-member history and class-wide consistency from one branded portal — so you know exactly where to step in and who needs a nudge.',
+      'Watch your roster, per-member history and class-wide consistency from one branded portal - so you know exactly where to step in and who needs a nudge.',
   },
 ];
 
-/** Pricing tiers. All tiers include the complete feature set. */
-export type Plan = {
-  name: string;
-  members: string;
-  blurb: string;
+/** Pricing. One offer with three lines on it - there are no tiers, and every
+ *  club gets every feature. `perMember` is charged per member who actually uses
+ *  the app, not per member on the club's books. */
+export type Pricing = {
   setup: string;
-  club: string;
+  monthly: string;
   perMember: string;
-  highlight?: boolean;
+  /** A worked example, because per-member pricing is impossible to feel until
+   *  somebody does the arithmetic at a real headcount. */
+  example: { members: number; base: string; members_cost: string; total: string };
 };
 
-export const plans: Plan[] = [
-  {
-    name: 'Basic',
-    members: '1–20 members',
-    blurb: 'For a single studio or small gym getting started.',
-    setup: '£500',
-    club: '£50',
-    perMember: '£3',
-  },
-  {
-    name: 'Standard',
-    members: '20–99 members',
-    blurb: 'For an established club with a growing membership.',
-    setup: '£1,000',
-    club: '£150',
-    perMember: '£2.50',
-    highlight: true,
-  },
-  {
-    name: 'Pro Plus',
-    members: '100+ members',
-    blurb: 'For large clubs and multi-site operators.',
-    setup: '£1,000',
-    club: '£150',
-    perMember: '£2',
-  },
+export const pricing: Pricing = {
+  setup: '£1,000',
+  monthly: '£250',
+  perMember: '£2.50',
+  example: { members: 60, base: '£250.00', members_cost: '£150.00', total: '£400.00' },
+};
+
+/** What the monthly fee covers. The last line is the strongest claim on the
+ *  site: no competitor selling seats on a fixed product can make it. */
+export const covers: string[] = [
+  'Your website, hosted and kept up',
+  'iOS and Android apps, and every store resubmission',
+  'The management portal for you and your coaches',
+  'Help for your members, so their problems aren’t yours',
+  'Ask for a feature - and get every feature anyone else asks for',
+  'OS updates and store policy changes, handled quietly',
 ];
 
 export const pricingNote =
@@ -219,9 +289,9 @@ export const spotlight = {
   name: 'Sam Wilson Zara',
   descriptor: 'Women’s health, fitness & wellness',
   blurb:
-    'Sam Wilson Zara run their small-group training from their own branded app — members book in, log every session, and watch their strength and progress grow, in a studio where women’s training is the focus.',
+    'Sam Wilson Zara run their small-group training from their own branded app - members book in, log every session, and watch their strength and progress grow, in a studio where women’s training is the focus.',
   quote:
-    'Their own app, their own name on the App Store — with the whole platform running quietly behind it.',
+    'Their own app, their own name on the App Store - with the whole platform running quietly behind it.',
   website: 'https://www.samwilsonzara.com',
   logo: '/customers/samwilsonzara.png',
   // Sam Wilson Zara brand seeds (lime + dark chrome).
@@ -239,15 +309,19 @@ export const spotlight = {
   },
 };
 
-/** FAQ — doubles as long-tail SEO content + FAQPage structured data. */
+/** FAQ - doubles as long-tail SEO content + FAQPage structured data. */
 export const faqs: { q: string; a: string }[] = [
   {
-    q: 'Can any gym have its own app?',
-    a: 'Yes. Whether you run a single studio or a multi-site club, we build and publish a fully branded iOS and Android app for your gym — your name, your logo, your colours — with members logging and tracking every session inside it.',
+    q: 'Who owns the member data?',
+    a: 'Your club does. Every member record, every session logged, every booking and every payment belongs to the club. We hold it and run it for you - we don’t own it.',
+  },
+  {
+    q: 'Can any gym have its own website and app?',
+    a: 'Yes. Whether you run a single studio or a multi-site club, we build your website and publish a fully branded iOS and Android app for your gym - your name, your logo, your colours - with members booking on the site and logging every session in the app.',
   },
   {
     q: 'Do members download it under our own name?',
-    a: 'They do. Your app is published on the App Store and Google Play under your club’s name, so members search for your gym and download your app — not a generic third-party one.',
+    a: 'They do. Your app is published on the App Store and Google Play under your club’s name, so members search for your gym and download your app - not a generic third-party one.',
   },
   {
     q: 'Do we need a developer or designer?',
@@ -255,20 +329,20 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: 'What does it cost to get started?',
-    a: 'Plans start at a £500 one-off setup fee plus a £50/month club subscription and £3/month per member on Basic, with lower per-member rates as you grow. See the pricing page for full details.',
+    a: 'A £1,000 one-off setup fee covers your new website, your branded iOS and Android apps and your club set up in the portal. After that it is £250 a month plus £2.50 per member who actually uses the app. Every club gets every feature - there are no tiers.',
   },
   {
     q: 'Is it available on both iOS and Android?',
-    a: 'Yes — every club gets native iOS and Android apps, plus a web portal for coaches and managers, all running on one shared backend.',
+    a: 'Yes - every club gets native iOS and Android apps, plus a web portal for coaches and managers, all running on one shared backend.',
   },
   {
     q: 'Can we manage classes and members ourselves?',
-    a: 'Absolutely. Build a reusable exercise library, create your class catalogue once, schedule recurring sessions, and manage your member roster and access — all from your branded management web app.',
+    a: 'Absolutely. Build a reusable exercise library, create your class catalogue once, schedule recurring sessions, and manage your member roster and access - all from your branded management web app.',
   },
 ];
 
 export const nav = [
-  { href: '/features/', label: 'Features' },
+  { href: '/features/', label: 'What you get' },
   { href: '/how-it-works/', label: 'How it works' },
   { href: '/pricing/', label: 'Pricing' },
   { href: '/contact/', label: 'Contact' },

@@ -1,0 +1,77 @@
+---
+// The own-brand argument, drawn: four app icons in four different colours, none
+// of them ours, sitting on our own navy. Sam Wilson Zara's tile is her real
+// 1024² store icon (ice/fitness/brands/samwilsonzara/icon-only.png). Ironline is
+// the demo club that already exists in the product (brands/ironline/brand.json)
+// and ships with no artwork; the mark here is a proposal in its own registry
+// colours. The last two slots stay empty on purpose - two invented club logos
+// would be the one thing on this page a prospect could catch us out on.
+import { clubTiles, spotlight } from '../data/site';
+import StoreBadges from './StoreBadges.astro';
+---
+
+<div>
+  <div class="rounded-3xl bg-brand-950 p-6 sm:p-8">
+    <p class="eyebrow text-onbrand-dim">The same platform, four clubs</p>
+
+    <div class="mt-5 grid grid-cols-4 gap-3 sm:gap-4">
+      {clubTiles.map((t) => (
+        <div>
+          {t.kind === 'swz' && (
+            <img
+              src="/customers/samwilsonzara-icon.png"
+              alt="The Sam Wilson Zara app icon"
+              width="256" height="256"
+              class="aspect-square w-full rounded-[22%] object-cover bg-[#545454]"
+            />
+          )}
+          {t.kind === 'harbour' && (
+            <div class="aspect-square w-full rounded-[22%] bg-[#12233f] flex items-center justify-center">
+              <svg viewBox="0 0 64 64" class="w-3/5" aria-hidden="true">
+                <rect x="13" y="38" width="9" height="14" rx="4.5" fill="#ffffff" opacity="0.45" />
+                <rect x="27.5" y="28" width="9" height="24" rx="4.5" fill="#ffffff" opacity="0.8" />
+                <rect x="42" y="14" width="9" height="38" rx="4.5" fill="#f59e0b" />
+              </svg>
+            </div>
+          )}
+          {t.kind === 'ironline' && (
+            <div class="aspect-square w-full rounded-[22%] bg-[#0B0B0C] flex items-center justify-center">
+              <svg viewBox="0 0 64 64" class="w-3/5" aria-hidden="true">
+                <rect x="29" y="17" width="6" height="30" rx="3" fill="#A9B2BD" />
+                <rect x="20" y="14" width="24" height="6" rx="3" fill="#DC2626" />
+                <rect x="20" y="44" width="24" height="6" rx="3" fill="#DC2626" />
+              </svg>
+            </div>
+          )}
+          {t.kind === 'empty' && (
+            <div class="aspect-square w-full rounded-[22%] border-[1.5px] border-dashed border-white/25 bg-white/5 flex items-center justify-center text-onbrand-dim">
+              <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 6v12M6 12h12" /></svg>
+            </div>
+          )}
+          <p class={`mt-2 text-center text-[11px] leading-tight ${t.kind === 'empty' ? 'text-onbrand-dim' : 'text-white font-semibold'}`}>
+            {t.name}
+          </p>
+          {t.note && <p class="text-center text-[10px] leading-tight text-onbrand-dim">{t.note}</p>}
+        </div>
+      ))}
+    </div>
+
+    <!-- A live club, with the real download badges. Deliberately NOT a mock of
+         an App Store listing: the previous version drew Apple's GET button and
+         retyped their badge wording, both of which their guidelines forbid. -->
+    <div class="mt-7 border-t border-white/10 pt-6">
+      <div class="flex items-center gap-3">
+        <img src="/customers/samwilsonzara-icon.png" alt="" width="128" height="128"
+             class="size-12 shrink-0 rounded-xl object-cover bg-[#545454]" />
+        <div class="min-w-0">
+          <p class="font-semibold text-white leading-tight">{spotlight.name}</p>
+          <p class="text-xs text-onbrand-dim">{spotlight.descriptor}</p>
+        </div>
+      </div>
+      <StoreBadges appStore={spotlight.appStore} playStore={spotlight.playStore} height={34} class="mt-4" />
+    </div>
+  </div>
+  <p class="mt-4 text-center text-sm text-onbrand-dim">
+    One live club, our own build, a demo, and a slot waiting.
+  </p>
+</div>

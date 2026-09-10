@@ -18,6 +18,21 @@ type Props = {
   /** object-position for the screenshot (e.g. "object-left-top" to reveal the
    *  left edge of a wide image). Defaults to top-centre. */
   objectPos?: string;
+  /** Magnify the screenshot inside the frame, anchored top-left, so a small
+   *  placement shows a legible crop instead of the whole screen shrunk to mush.
+   *  A full 1440px-wide portal capture shown in a 500px frame renders at 0.35x,
+   *  which turns 14px UI text into 5px; zoom={1.8} brings that back to ~9px by
+   *  showing the top-left region instead. 1 = fit the whole screenshot. */
+  zoom?: number;
+  /** Which part of the screenshot the zoom looks at, as 0-1 fractions of the
+   *  image. Defaults to the top-left corner, which on a portal capture is the
+   *  sidebar - usually you want to skip past it, e.g. focus={[0.19, 0.08]}. */
+  focus?: [number, number];
+  /** Phones only. Trims a fraction off the TOP of the screenshot - use it to
+   *  drop a captured iOS status bar, which reads as doubled-up chrome inside a
+   *  drawn phone. Unlike `zoom` this never crops the sides: a phone UI is drawn
+   *  edge to edge, so losing either edge looks broken. */
+  trimTop?: number;
   class?: string;
 };
 const {
@@ -29,8 +44,33 @@ const {
   iconSrc = '/logos/harbourFitnessIcon.svg',
   tint,
   objectPos = 'object-top',
+  zoom = 1,
+  focus = [0, 0],
+  trimTop = 0,
   class: className = '',
 } = Astro.props;
+
+// A zoomed screenshot is laid out by width rather than object-fit, so the crop
+// is predictable: the image is widened past the frame, then shifted so the
+// requested focal point lands at the frame's top-left. Offsets are a percentage
+// of the CONTAINER, so a focal fraction has to be multiplied by the zoom.
+const [fx, fy] = focus;
+
+// Trimming the top means scaling up just enough to refill the frame, then
+// shifting by the trimmed amount. The tiny horizontal overflow is split evenly
+// so the screen stays centred - the whole point of doing it this way.
+const trimScale = trimTop > 0 ? 1 / (1 - trimTop) : 1;
+const trimStyle = trimTop > 0
+  ? `width:${(trimScale * 100).toFixed(2)}%;height:auto;` +
+    `left:${(-(trimScale - 1) / 2 * 100).toFixed(2)}%;top:${(-trimTop * trimScale * 100).toFixed(2)}%`
+  : undefined;
+
+const zoomStyle = zoom > 1
+  ? `width:${zoom * 100}%;height:auto;left:${-(fx * zoom * 100).toFixed(2)}%;top:${-(fy * zoom * 100).toFixed(2)}%`
+  : trimStyle;
+const zoomClass = (zoom > 1 || trimTop > 0)
+  ? 'absolute z-10 block max-w-none'
+  : `absolute inset-0 z-10 block h-full w-full object-cover ${objectPos}`;
 
 // When a club tint is supplied, use inline styles; otherwise fall back to the
 // Harbour brand Tailwind classes.
@@ -48,13 +88,14 @@ const capClass = tint ? '' : 'text-brand-500';
         <div class="absolute left-1/2 top-0 z-20 h-5 w-24 -translate-x-1/2 rounded-b-2xl bg-ink-900"></div>
         <div class={`absolute inset-0 flex flex-col items-center justify-center gap-2 text-center ${phClass}`} style={phStyle}>
           <img src={iconSrc} alt="" class="h-10 w-10 rounded-lg object-contain opacity-90" />
-          {caption && <p class={`px-4 text-xs font-medium uppercase tracking-wider ${capClass}`} style={capStyle}>{caption}</p>}
+          {caption && <p class={`px-4 eyebrow ${capClass}`} style={capStyle}>{caption}</p>}
         </div>
         {src && (
           <img
             src={src}
             alt={alt}
-            class={`absolute inset-0 z-10 block h-full w-full object-cover ${objectPos}`}
+            class={zoomClass}
+            style={zoomStyle}
             loading="lazy"
             onerror="this.style.display='none'"
           />
@@ -79,13 +120,14 @@ const capClass = tint ? '' : 'text-brand-500';
       <div class="relative aspect-[16/10] bg-ink-100">
         <div class={`absolute inset-0 flex flex-col items-center justify-center gap-2 text-center ${phClass}`} style={phStyle}>
           <img src={iconSrc} alt="" class="h-12 w-12 rounded-lg object-contain opacity-90" />
-          {caption && <p class={`px-4 text-xs font-medium uppercase tracking-wider ${capClass}`} style={capStyle}>{caption}</p>}
+          {caption && <p class={`px-4 eyebrow ${capClass}`} style={capStyle}>{caption}</p>}
         </div>
         {src && (
           <img
             src={src}
             alt={alt}
-            class={`absolute inset-0 z-10 block h-full w-full object-cover ${objectPos}`}
+            class={zoomClass}
+            style={zoomStyle}
             loading="lazy"
             onerror="this.style.display='none'"
           />

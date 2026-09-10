@@ -3,18 +3,20 @@ import Base from '../layouts/Base.astro';
 import BreadcrumbLd from '../components/BreadcrumbLd.astro';
 import { site, steps } from '../data/site';
 
-const title = `How it works — ${site.name}`;
+const title = `How it works - ${site.name}`;
 const description =
-  'From your logo to a live app on the stores: how Harbour Fitness brands, builds, publishes and runs a fitness app for your gym — with members logging sessions and you managing it all from the web.';
+  'From your logo to a live app on the stores: how Harbour Fitness brands, builds, publishes and runs a fitness app for your gym - with members logging sessions and you managing it all from the web.';
 ---
 
 <Base title={title} description={description}>
   <!-- Header -->
-  <section class="border-b border-ink-200">
-    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">How it works</p>
+  <section class="relative overflow-hidden border-b border-ink-200">
+    <div class="pointer-events-none absolute -top-40 -right-32 h-[34rem] w-[34rem] rounded-full bg-accent-200/50 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-48 -left-40 h-[30rem] w-[30rem] rounded-full bg-brand-200/45 blur-3xl"></div>
+    <div class="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24">
+      <p class="eyebrow text-accent-700">How it works</p>
       <h1 class="display mt-3 text-4xl md:text-5xl text-brand-950 max-w-3xl">
-        From your logo to a live app — we handle the hard part.
+        From your logo to a live app - we handle the hard part.
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-ink-600 leading-relaxed">
         No design project. No dev team on your side. You bring the gym; we bring the app,
@@ -44,7 +46,7 @@ const description =
       <div class="rounded-2xl border border-ink-200 bg-white p-6">
         <h3 class="font-semibold text-ink-900">One backend, many gyms</h3>
         <p class="mt-2 text-sm text-ink-600 leading-relaxed">
-          Every club runs on the same shared platform, with your data scoped to your club —
+          Every club runs on the same shared platform, with your data scoped to your club -
           ready to scale from a single studio to a multi-site operator.
         </p>
       </div>
@@ -52,7 +54,7 @@ const description =
         <h3 class="font-semibold text-ink-900">Your brand, front and centre</h3>
         <p class="mt-2 text-sm text-ink-600 leading-relaxed">
           Your logo, your colours, your name on the store listing and the home-screen icon.
-          Members download your app — not a generic one.
+          Members download your app - not a generic one.
         </p>
       </div>
       <div class="rounded-2xl border border-ink-200 bg-white p-6">

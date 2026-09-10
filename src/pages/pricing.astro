@@ -1,146 +1,134 @@
 ---
 import Base from '../layouts/Base.astro';
-import Icon from '../components/Icon.astro';
-import { site, plans, pricingNote } from '../data/site';
+import BreadcrumbLd from '../components/BreadcrumbLd.astro';
+import { site, pricing, covers, pricingNote, faqs } from '../data/site';
 
-const title = `Pricing — ${site.name}`;
+const title = `Pricing - ${site.name}`;
 const description =
-  'Simple, transparent pricing for your gym’s own branded app: a one-off setup fee, a monthly club subscription, and a small per-member fee. All functionality included on every plan.';
+  'One price for a gym’s website, its own iOS and Android apps and the management portal behind them: £1,000 one-off setup, then £250 a month plus £2.50 per member who uses the app. Every club gets every feature.';
 
 const siteUrl = Astro.site?.href ?? 'https://harbourfitness.co.uk';
+
 const productLd = {
   '@context': 'https://schema.org',
   '@type': 'Product',
-  name: `${site.name} — branded club app`,
+  name: `${site.name} - website, branded apps and club portal`,
   description,
   brand: { '@type': 'Brand', name: site.name },
-  offers: plans.map((p) => ({
+  offers: {
     '@type': 'Offer',
-    name: `${p.name} plan`,
     priceCurrency: 'GBP',
-    price: p.club.replace(/[£,]/g, ''),
-    description: `${p.members}. ${p.club}/month club fee, ${p.perMember}/month per member, ${p.setup} one-off setup. All functionality included.`,
+    price: pricing.monthly.replace(/[£,]/g, ''),
+    description: `${pricing.setup} one-off setup, then ${pricing.monthly}/month plus ${pricing.perMember}/month per member who uses the app. Every feature included - there are no tiers.`,
     url: new URL('/pricing/', siteUrl).href,
     availability: 'https://schema.org/InStock',
-  })),
-};
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-    { '@type': 'ListItem', position: 2, name: 'Pricing', item: new URL('/pricing/', siteUrl).href },
-  ],
+  },
 };
 
-const included = [
-  'Your own branded iOS & Android app',
-  'Class & session management',
-  'Reusable exercise library',
-  'Mobile-first workout logging',
-  'Member roster & admin',
-  'Progress tracking & reports',
-];
+const priceFaqs = faqs.filter((f) => /cost|own the member data/i.test(f.q));
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: priceFaqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Base title={title} description={description}>
+  <BreadcrumbLd items={[{ name: 'Home', url: '/' }, { name: 'Pricing', url: '/pricing/' }]} />
+
   <!-- Header -->
-  <section class="border-b border-ink-200">
-    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">Pricing</p>
-      <h1 class="display mt-3 text-4xl md:text-5xl text-brand-950 max-w-3xl">
-        One simple structure. All the functionality.
+  <section class="relative overflow-hidden border-b border-ink-200">
+    <div class="pointer-events-none absolute -top-40 -right-32 h-[34rem] w-[34rem] rounded-full bg-accent-200/50 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-48 -left-40 h-[30rem] w-[30rem] rounded-full bg-brand-200/45 blur-3xl"></div>
+    <div class="relative mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-24">
+      <p class="eyebrow text-accent-700">Pricing</p>
+      <h1 class="display mt-4 text-4xl md:text-5xl text-brand-950 max-w-3xl">
+        One price. Every feature. Including the ones nobody’s asked for yet.
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-ink-600 leading-relaxed">
-        Every plan includes the complete platform — the only thing that changes is the size of
-        your club. A one-off setup fee gets your branded app built and published; after that it’s a
-        monthly club subscription plus a small per-member fee.
+        There is no tier where the good bit is locked away, and no upgrade to negotiate when you
+        grow. If any club on the platform asks for something and we build it, it lands in your app
+        too.
       </p>
     </div>
   </section>
 
-  <!-- Plans -->
-  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-    <div class="grid gap-6 lg:grid-cols-3 items-start">
-      {plans.map((p) => (
-        <div class={`relative flex flex-col rounded-2xl border bg-white p-7 ${p.highlight ? 'border-brand-600 ring-1 ring-brand-600 shadow-xl' : 'border-ink-200'}`}>
-          {p.highlight && (
-            <span class="absolute -top-3 left-7 rounded-full bg-accent-500 px-3 py-1 text-xs font-semibold text-brand-950">
-              Most popular
-            </span>
-          )}
-          <h2 class="text-xl font-semibold text-ink-900">{p.name}</h2>
-          <p class="mt-1 text-sm font-medium text-teal-700">{p.members}</p>
-          <p class="mt-3 text-ink-600 leading-relaxed">{p.blurb}</p>
-
-          <div class="mt-6 border-t border-ink-100 pt-6">
-            <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-ink-900">{p.club}</span>
-              <span class="text-ink-500">/ month club fee</span>
+  <!-- The offer -->
+  <section class="bg-surface-2 border-b border-ink-200">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+      <div class="grid items-start gap-6 lg:grid-cols-[1.15fr_.85fr]">
+        <div class="rounded-3xl border border-ink-200 bg-white p-7 sm:p-9">
+          {[
+            [pricing.setup, '', 'Once, to get started', 'Full design and build of your new website, your branded iOS and Android apps, and your club set up in the portal.'],
+            [pricing.monthly, '/mo', 'Support, hosting and everything after', 'The portal, both apps, the website, help for your members, and every new feature - whether you asked for it or somebody else did.'],
+            [pricing.perMember, '/mo', 'Per member who actually uses the app', 'Not per member on your books. A member who never downloads it never appears on your bill.'],
+          ].map(([amt, per, t, b], i) => (
+            <div class={`flex flex-wrap items-baseline gap-x-6 gap-y-2 py-5 ${i < 2 ? 'border-b border-ink-100' : ''}`}>
+              <p class="display w-28 shrink-0 text-4xl text-brand-950 tabular-nums">
+                {amt}<span class="text-sm font-semibold tracking-normal text-ink-500">{per}</span>
+              </p>
+              <div class="min-w-0 flex-1">
+                <p class="font-bold tracking-tight text-brand-950">{t}</p>
+                <p class="mt-1 text-sm text-ink-600 leading-relaxed">{b}</p>
+              </div>
             </div>
-            <p class="mt-2 text-ink-700">
-              <span class="text-xl font-semibold text-ink-900">{p.perMember}</span>
-              <span class="text-ink-500"> / month per member</span>
-            </p>
-            <p class="mt-3 text-sm text-ink-500">
-              <span class="font-medium text-ink-700">{p.setup}</span> one-off setup fee
-            </p>
+          ))}
+
+          <div class="mt-6 rounded-2xl bg-surface-3 p-5 sm:p-6">
+            <p class="eyebrow text-ink-500">What that looks like - a club with {pricing.example.members} members on the app</p>
+            <dl class="mt-3 text-sm text-ink-700">
+              <div class="flex justify-between py-1"><dt>Support, hosting, website and both apps</dt><dd class="tabular-nums">{pricing.example.base}</dd></div>
+              <div class="flex justify-between py-1"><dt>{pricing.example.members} app members &times; {pricing.perMember}</dt><dd class="tabular-nums">{pricing.example.members_cost}</dd></div>
+              <div class="mt-2 flex justify-between border-t border-ink-300 pt-3 text-base font-extrabold text-brand-950"><dt>Every month</dt><dd class="tabular-nums">{pricing.example.total}</dd></div>
+            </dl>
+            <p class="mt-2 text-sm text-ink-500">Plus {pricing.setup} once, at the start.</p>
           </div>
 
-          <div class="mt-6 flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-sm font-medium text-brand-700">
-            <Icon name="sparkles" class="h-4 w-4" />
-            All functionality included
-          </div>
-
-          <a
-            href="/contact/"
-            class={`mt-6 inline-flex justify-center rounded-xl px-5 py-3 font-medium transition-colors ${p.highlight ? 'bg-brand-700 text-white hover:bg-brand-800' : 'border border-ink-300 text-ink-800 hover:border-brand-400 hover:text-brand-700'}`}
-          >
-            Book a demo
+          <a href="/contact/" class="mt-7 inline-block rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 hover:bg-accent-400 transition-colors">
+            Book a 20-minute demo
           </a>
         </div>
-      ))}
-    </div>
 
-    <p class="mt-6 text-sm text-ink-500">All prices exclude VAT. Cancel your monthly subscription any time.</p>
-  </section>
-
-  <!-- What's included -->
-  <section class="border-t border-ink-200 bg-ink-50">
-    <div class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16">
-      <p class="text-sm font-medium uppercase tracking-wider text-teal-700">Every plan includes</p>
-      <h2 class="display mt-3 text-2xl md:text-3xl text-brand-950">The whole platform. No tiers on features.</h2>
-      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {included.map((f) => (
-          <li class="flex items-start gap-3 text-ink-700">
-            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal-600 text-white">
-              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-            </span>
-            <span>{f}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <!-- Bespoke -->
-  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16">
-    <div class="rounded-3xl border border-ink-200 bg-white p-8 md:p-12">
-      <div class="grid gap-6 md:grid-cols-3 md:items-center">
-        <div class="md:col-span-2">
-          <p class="text-sm font-medium uppercase tracking-wider text-brand-600">Need more?</p>
-          <h2 class="display mt-3 text-2xl md:text-3xl text-brand-950">Bespoke work, on request.</h2>
-          <p class="mt-3 max-w-2xl text-ink-600 leading-relaxed">{pricingNote}</p>
-        </div>
-        <div class="md:text-right">
-          <a href="/contact/" class="inline-flex rounded-xl bg-brand-700 px-5 py-3 font-medium text-white hover:bg-brand-800 transition-colors">
-            Talk to us &rarr;
-          </a>
+        <div class="rounded-3xl bg-brand-950 p-7 sm:p-8 text-white">
+          <p class="eyebrow text-accent-400">What the {pricing.monthly} covers</p>
+          <ul class="mt-4 space-y-3">
+            {covers.map((c) => (
+              <li class="flex items-start gap-3 text-sm text-onbrand-body leading-relaxed">
+                <svg class="mt-1 size-3.5 shrink-0 text-accent-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5" /></svg>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-6 border-t border-white/10 pt-5 text-sm text-onbrand-dim">
+            No tiers, no feature gates, and no per-seat upgrade to negotiate when your membership
+            grows.
+          </p>
         </div>
       </div>
+      <p class="mt-6 text-sm text-ink-500">{pricingNote}</p>
     </div>
+  </section>
+
+  <!-- The questions pricing raises -->
+  <section class="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8 py-16 md:py-20">
+    <h2 class="display text-3xl md:text-4xl text-brand-950">While you’re working it out.</h2>
+    <dl class="mt-8 max-w-3xl divide-y divide-ink-200 border-y border-ink-200">
+      {priceFaqs.map((f) => (
+        <div class="py-6">
+          <dt class="text-lg font-bold tracking-tight text-brand-950">{f.q}</dt>
+          <dd class="mt-2 text-ink-600 leading-relaxed">{f.a}</dd>
+        </div>
+      ))}
+    </dl>
+    <a href="/contact/" class="mt-8 inline-block rounded-xl bg-accent-500 px-5 py-3 font-semibold text-brand-950 hover:bg-accent-400 transition-colors">
+      Talk it through with us &rarr;
+    </a>
   </section>
 
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productLd)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqLd)} />
 </Base>

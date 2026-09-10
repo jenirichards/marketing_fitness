@@ -12,33 +12,25 @@
   </defs>
   <rect width="1200" height="630" fill="url(#bg)" />
   <circle cx="1080" cy="90" r="260" fill="#f59e0b" opacity="0.10" />
-  <circle cx="120" cy="600" r="300" fill="#0d9488" opacity="0.12" />
+  <circle cx="120" cy="600" r="300" fill="#f59e0b" opacity="0.09" />
 
   <!-- Icon chip -->
   <g transform="translate(96,96)">
-    <rect width="96" height="96" rx="22" fill="url(#chip)" />
-    <text x="0" y="66" font-family="'Courier New', monospace" font-size="58" fill="#2dd4bf" opacity="0.55">{</text>
-    <text x="74" y="66" font-family="'Courier New', monospace" font-size="58" fill="#2dd4bf" opacity="0.55">}</text>
-    <g transform="translate(48,48) scale(1.5) translate(-32,-32)">
-      <g fill="#ffffff">
-        <rect x="26" y="29" width="12" height="6" rx="3" />
-        <rect x="21" y="23" width="5.5" height="18" rx="2.2" />
-        <rect x="37.5" y="23" width="5.5" height="18" rx="2.2" />
-      </g>
-      <g fill="#5eead4">
-        <rect x="16.5" y="26.5" width="4" height="11" rx="2" />
-        <rect x="43.5" y="26.5" width="4" height="11" rx="2" />
-      </g>
+    <rect width="96" height="96" rx="22" fill="#12233f" />
+    <g transform="scale(1.5)">
+      <rect x="13" y="38" width="9" height="14" rx="4.5" fill="#ffffff" opacity="0.45" />
+      <rect x="27.5" y="28" width="9" height="24" rx="4.5" fill="#ffffff" opacity="0.8" />
+      <rect x="42" y="14" width="9" height="38" rx="4.5" fill="#f59e0b" />
     </g>
   </g>
   <text x="216" y="162" font-family="'Geist', Arial, sans-serif" font-size="34" font-weight="700" fill="#c2d2e8">Harbour Fitness</text>
 
   <!-- Headline -->
-  <text x="96" y="330" font-family="'Geist', Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-2" fill="#ffffff">Your gym’s own app,</text>
-  <text x="96" y="416" font-family="'Geist', Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-2" fill="#8fadd5">without building one.</text>
+  <text x="96" y="330" font-family="'Geist', Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-2" fill="#ffffff">Your whole club online.</text>
+  <text x="96" y="416" font-family="'Geist', Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-2" fill="#fbbf24">Under your own name.</text>
 
   <!-- Sub -->
-  <text x="96" y="486" font-family="'Geist', Arial, sans-serif" font-size="30" font-weight="500" fill="#c2d2e8">Branded member app · management portal · published under your name</text>
+  <text x="96" y="486" font-family="'Geist', Arial, sans-serif" font-size="30" font-weight="500" fill="#c2d2e8">Your website · your own apps on both stores · one portal behind both</text>
 
   <!-- Footer tag -->
   <rect x="96" y="536" width="270" height="8" rx="4" fill="#f59e0b" />
