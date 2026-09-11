@@ -95,6 +95,12 @@ export const features: Feature[] = [
       'A reusable exercise library shared across every class. Define each move once with description and defaults; pull it into any session.',
   },
   {
+    icon: 'store',
+    title: 'Demonstration videos',
+    body:
+      'Upload a short clip to any exercise - a couple of reps, the angle that matters - and it appears on that exercise in your members’ app. They see how the movement should look at the moment they’re about to do it, instead of guessing or copying the person next to them.',
+  },
+  {
     icon: 'dumbbell',
     title: 'Mobile-first workout logging',
     body:
