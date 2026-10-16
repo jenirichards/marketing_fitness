@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 
 type Props = {
   title: string;
@@ -36,14 +37,6 @@ const websiteLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Google Analytics 4 (Harbour Fitness property: G-2GE6VDV9JX) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-2GE6VDV9JX"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', 'G-2GE6VDV9JX');
-    </script>
 
     <link rel="icon" type="image/svg+xml" href="/logos/harbourFitnessIcon.svg" />
     <link rel="apple-touch-icon" href="/logos/harbourFitnessIcon.svg" />
@@ -92,5 +85,6 @@ const websiteLd = {
       <slot />
     </main>
     <Footer />
+    <ConsentBanner />
   </body>
 </html>

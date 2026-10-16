@@ -353,3 +353,6 @@ export const nav = [
   { href: '/pricing/', label: 'Pricing' },
   { href: '/contact/', label: 'Contact' },
 ];
+
+/** GA4 web stream for the Harbour Fitness site. Loaded only after consent. */
+export const gaMeasurementId = 'G-2GE6VDV9JX';
